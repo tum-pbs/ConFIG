@@ -1,0 +1,17 @@
+device: cuda:0
+final_lr: 0.0001
+lr: 0.001
+lr_scheduler: cosine
+n_boundary: 1000
+n_internal: 20000
+save_path: ./PINN_trained/Kovasznay/
+network_initialization: xavier
+data_sampler: latin_hypercube
+update_training_data: true
+validation_epoch_frequency: 1
+x_start: -0.5
+x_end: 1.0
+y_start: -0.5
+y_end: 1.5
+record_final_losses: true
+final_record_epoch: 500

@@ -1,0 +1,17 @@
+device: cuda:0
+final_lr: 0.0001
+lr: 0.001
+lr_scheduler: cosine
+n_boundary: 250
+n_initial: 250
+n_internal: 10000
+save_path: ./PINN_trained/Burgers/
+network_initialization: xavier
+data_sampler: latin_hypercube
+simulation_time: 1.0
+update_training_data: true
+validation_epoch_frequency: 1
+x_end: 1.0
+x_start: -1.0
+record_final_losses: true
+final_record_epoch: 500
