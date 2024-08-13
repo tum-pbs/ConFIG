@@ -1,7 +1,7 @@
 # ConFIG: Conflict-Free Inverse Gradients Method
 
 <h1 align="center">
-  <img src="./docs/assets/config.png" width="400"/>
+  <img src="./assets/config.png" width="400"/>
 </h1>
 
 <h4 align="center">Official implementation of Conflict-Free Inverse Gradients Method</h4>
@@ -41,11 +41,11 @@ Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gr
 ## Paper Info
 
 <h4 align="center">ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks</h4>
-<h6 align="center"><img src="./docs/assets/TUM.svg" width="16"><a href="https://tum-pbs.github.io/">Qiang Liu</a>, <img src="./docs/assets/PKU.svg" width="16"><a href="https://rachelcmy.github.io/">Mengyu Chu</a> and <img src="./docs/assets/TUM.svg" width="16"> <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a></h6>
+<h6 align="center"><img src="./assets/TUM.svg" width="16"><a href="https://tum-pbs.github.io/">Qiang Liu</a>, <img src="./assets/PKU.svg" width="16"><a href="https://rachelcmy.github.io/">Mengyu Chu</a> and <img src="./assets/TUM.svg" width="16"> <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a></h6>
 
 <h6 align="center">
-    <img src="./docs/assets/TUM.svg" width="16"> Technical University of Munich
-    <img src="./docs/assets/PKU.svg" width="16"> Peking University
+    <img src="./assets/TUM.svg" width="16"> Technical University of Munich
+    <img src="./assets/PKU.svg" width="16"> Peking University
 </h6>
 
 ***Abstract:*** The loss functions of many learning problems contain multiple additive terms that can disagree and yield conflicting update directions. For Physics-Informed Neural Networks (PINNs), loss terms on initial/boundary conditions and physics equations are particularly interesting as they are well-established as highly difficult tasks. To improve learning the challenging multi-objective task posed by PINNs, we propose the ConFIG method, which provides conflict-free updates by ensuring a positive dot product between the final update and each loss-specific gradient. It also maintains consistent optimization rates for all loss terms and dynamically adjusts gradient magnitudes based on conflict levels. We additionally leverage momentum to accelerate optimizations by alternating the back-propagation of different loss terms. The proposed method is evaluated across a range of challenging PINN scenarios, consistently showing superior performance and runtime compared to baseline methods. We also test the proposed method in a classic multi-task benchmark, where the ConFIG method likewise exhibits a highly promising performance. 
