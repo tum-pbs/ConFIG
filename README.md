@@ -2,7 +2,7 @@
   <img src="./docs/assets/config.png" width="400"/>
 </h1>
 
-<h4 align="center">Official implementation of Conflict-Free Inverse Gradient Method</h4>
+<h4 align="center">Official implementation of Conflict-Free Inverse Gradients Method</h4>
 <h6 align="center">Towards Conflict-free Training for everything!</h6>
 
 <p align="center">
@@ -13,7 +13,7 @@
 
 * **What is the ConFIG method?**
 
-​	The conFIG method is a generic method for optimization problems involving **multiple loss terms** (i.e., Multi-task Learning, Continuous Learning, and Physics Informed Neural Networks). It prevents the optimization from getting stuck into a local minimum of a specific loss term due to the conflict between losses. On the contrary, it leads the optimization to the **shared minimal of all losses** by providing a **conflict-free update direction.**
+​	The conFIG method is a generic method for optimization problems involving **multiple loss terms** (e.g., Multi-task Learning, Continuous Learning, and Physics Informed Neural Networks). It prevents the optimization from getting stuck into a local minimum of a specific loss term due to the conflict between losses. On the contrary, it leads the optimization to the **shared minimal of all losses** by providing a **conflict-free update direction.**
 
 <img src="docs/assets/config_illustration.png" alt="image-20240811170722834" style="zoom: 33%;" />
 
@@ -22,15 +22,15 @@
 ​	The ConFIG method obtains the conflict-free direction by calculating the inverse of the loss-specific gradients matrix:
 
 $$
-\boldsymbol{g}_{ConFIG}=\left(\sum_{i=1}^{m} \boldsymbol{g}_{i}^\top\boldsymbol{g}_{u}\right)\boldsymbol{g}_u,
+`\boldsymbol{g}_{ConFIG}=\left(\sum_{i=1}^{m} \boldsymbol{g}_{i}^\top\boldsymbol{g}_{u}\right)\boldsymbol{g}_u,`
 $$
 
 $$
-\boldsymbol{g}_u = \mathcal{U}\left[
-[\mathcal{U}(\boldsymbol{g}_1),\mathcal{U}(\boldsymbol{g}_2),\cdots, \mathcal{U}(\boldsymbol{g}_m)]^{-\top} \mathbf{1}_m\right].
+`\boldsymbol{g}_u = \mathcal{U}\left[
+[\mathcal{U}(\boldsymbol{g}_1),\mathcal{U}(\boldsymbol{g}_2),\cdots, \mathcal{U}(\boldsymbol{g}_m)]^{-\top} \mathbf{1}_m\right].`
 $$
 
-Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gradient is always positive and equal, i.e., $\boldsymbol{g}_{i}^{\top}\boldsymbol{g}_{ConFIG}=\boldsymbol{g}_{i}^{\top}\boldsymbol{g}_{ConFIG} \quad \forall i,j \in [1,m]$​.
+Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gradient is always positive and equal, i.e., $`\boldsymbol{g}_{i}^{\top}\boldsymbol{g}_{ConFIG}=\boldsymbol{g}_{i}^{\top}\boldsymbol{g}_{ConFIG} \quad \forall i,j \in [1,m]`$​.
 
 * **Is the ConFIG Computationally expensive?**
 

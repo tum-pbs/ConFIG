@@ -78,13 +78,14 @@ plugins:
                     docstring_style: google
 
 nav:
-    - 'General Instructions': 'index.md'
+    - 'ConFIG': 'index.md'
+    - 'Get Started': 'start.md'
     - 'Examples': 
-        - 'Toy example of Muti-task Learning': 'examples/mtl_toy.ipynb'
+        - 'Toy Example of Muti-task Learning': 'examples/mtl_toy.ipynb'
         - "Solve Burgers' Equation with PINN": 'examples/pinn_burgers.ipynb'
     - 'API Reference':
-        - "Gradient operator": 'api/grad_operator.md'
-        - "Momentum operator": 'api/momentum_operator.md'
+        - "Gradient Operator": 'api/grad_operator.md'
+        - "Momentum Operator": 'api/momentum_operator.md'
         - "Weight Model": 'api/weight_model.md'
         - "Length Model": 'api/length_model.md'
         - "Utils": 'api/utils.md'
