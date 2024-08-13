@@ -1,7 +1,7 @@
 site_name: ConFIG
 site_description: Official Implementation for Conflict-Free Inverse Gradients Method.
 site_author: Qiang Liu
-site_url: https://qiauil.github.io/ConFIG
+site_url: https://tum-pbs.github.io/ConFIG
 
 repo_url: https://github.com/tum-pbs/ConFIG
 repo_name: tum-pbs/ConFIG

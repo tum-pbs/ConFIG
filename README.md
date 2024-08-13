@@ -6,7 +6,7 @@
 <h6 align="center">Towards Conflict-free Training for everything!</h6>
 
 <p align="center">
-  [<a href="https://arxiv.org/abs/2312.05320">Arxiv</a>]•[<a href="https://qiauil.github.io/ConFIG/">📖 Documentation & Examples</a>]
+  [<a href="https://arxiv.org/abs/2312.05320">Arxiv</a>]•[<a href="https://tum-pbs.github.io/ConFIG/">📖 Documentation & Examples</a>]
 </p>
 
 ## About
@@ -22,7 +22,7 @@
 ​	The ConFIG method obtains the conflict-free direction by calculating the inverse of the loss-specific gradients matrix:
 
 $$
-\boldsymbol{g}_{ConFIG}=\left(\sum_{i=1}^m \boldsymbol{g}_i^\top\boldsymbol{g}_u\right)\boldsymbol{g}_u,
+\boldsymbol{g}_{ConFIG}=\left(\sum_{i=1}^{m} \boldsymbol{g}_{i}^\top\boldsymbol{g}_{u}\right)\boldsymbol{g}_u,
 $$
 
 $$
@@ -30,7 +30,7 @@ $$
 [\mathcal{U}(\boldsymbol{g}_1),\mathcal{U}(\boldsymbol{g}_2),\cdots, \mathcal{U}(\boldsymbol{g}_m)]^{-\top} \mathbf{1}_m\right].
 $$
 
-Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gradient is always positive and equal, i.e., $\boldsymbol{g}_i^\top\boldsymbol{g}_{ConFIG}=\boldsymbol{g}_i^\top\boldsymbol{g}_{ConFIG} \quad \forall i,j \in [1,m]$​.
+Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gradient is always positive and equal, i.e., $\boldsymbol{g}_{i}^{\top}\boldsymbol{g}_{ConFIG}=\boldsymbol{g}_{i}^{\top}\boldsymbol{g}_{ConFIG} \quad \forall i,j \in [1,m]$​.
 
 * **Is the ConFIG Computationally expensive?**
 
@@ -39,7 +39,7 @@ Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gr
 ## Paper Info
 
 <h4 align="center">ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks</h4>
-<h6 align="center"><img src="./docs/assets/TUM.svg" width="16"><a href="https://qiauil.github.io/">Qiang Liu</a>, <img src="./docs/assets/PKU.svg" width="16"><a href="https://rachelcmy.github.io/">Mengyu Chu</a> and <img src="./docs/assets/TUM.svg" width="16"> <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a></h6>
+<h6 align="center"><img src="./docs/assets/TUM.svg" width="16"><a href="https://tum-pbs.github.io/">Qiang Liu</a>, <img src="./docs/assets/PKU.svg" width="16"><a href="https://rachelcmy.github.io/">Mengyu Chu</a> and <img src="./docs/assets/TUM.svg" width="16"> <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a></h6>
 
 <h6 align="center">
     <img src="./docs/assets/TUM.svg" width="16"> Technical University of Munich
@@ -101,7 +101,7 @@ for input_i in dataset:
     optimizer.step()
 ```
 
-More details and examples can be found in our [doc page](https://qiauil.github.io/ConFIG/).
+More details and examples can be found in our [doc page](https://tum-pbs.github.io/ConFIG/).
 
 To reproduce the result in our paper, please check the [experiments](https://github.com/tum-pbs/ConFIG/tree/main/experiments) folder.
 
