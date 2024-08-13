@@ -39,7 +39,7 @@ Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gr
 ## Paper Info
 
 <h4 align="center">ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks</h4>
-<h6 align="center"><img src="./docs/assets/TUM.svg" width="16"> <a href="https://tum-pbs.github.io/">Qiang Liu</a>, <img src="./docs/assets/PKU.svg" width="12"> <a href="https://rachelcmy.github.io/">Mengyu Chu</a>, and <img src="./docs/assets/TUM.svg" width="16"> <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a></h6>
+<h6 align="center"><img src="./docs/assets/TUM.svg" width="16"> <a href="https://tum-pbs.github.io/">Qiang Liu</a>, <img src="./docs/assets/PKU.svg" width="14"> <a href="https://rachelcmy.github.io/">Mengyu Chu</a>, and <img src="./docs/assets/TUM.svg" width="16"> <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a></h6>
 
 <h6 align="center">
     <img src="./docs/assets/TUM.svg" width="16"> Technical University of Munich
