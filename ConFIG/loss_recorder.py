@@ -3,6 +3,7 @@ class LossRecorder:
     
     def __init__(self,num_losses:int) -> None:
         self.num_losses=num_losses
+        self.current_losses=[0.0 for i in range(num_losses)]
     
     def record_loss(self,
                     losses_indexes:Union[int,Sequence[int]], 
@@ -64,7 +65,6 @@ class LatestLossRecorder(LossRecorder):
     
     def __init__(self,num_losses:int) -> None:
         super().__init__(num_losses)
-        self.losses=[None for i in range(num_losses)]
     
     def record_loss(self,
                     losses_indexes:Union[int,Sequence[int]], 
@@ -82,8 +82,8 @@ class LatestLossRecorder(LossRecorder):
         """
         losses_indexes,losses=self._preprocess_losses(losses_indexes,losses)
         for i in losses_indexes:
-            self.losses[i]=losses[losses_indexes.index(i)]
-        return self.losses
+            self.current_losses[i]=losses[losses_indexes.index(i)]
+        return self.current_losses
     
 class MomentumLossRecorder(LossRecorder):
     """
@@ -115,4 +115,5 @@ class MomentumLossRecorder(LossRecorder):
         for index in losses_indexes:
             self.t[index]+=1
             self.m[index]=self.betas*self.m[index]+(1-self.betas[index])*losses[losses_indexes.index(index)]
-        return [self.m[index]/(1-self.betas[index]**self.t[index]) for index in len(self.m)]
+        self.current_losses=[self.m[index]/(1-self.betas[index]**self.t[index]) for index in len(self.m)]
+        return self.current_losses

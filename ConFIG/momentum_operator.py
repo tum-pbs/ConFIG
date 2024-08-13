@@ -2,10 +2,10 @@ from torch import Tensor
 from torch.nn.modules import Module
 from ConFIG import Sequence
 from ConFIG.grad_operator import ConFIGOperator, GradientOperator
-from ConFIG.helpers import Sequence
+from ConFIG.utils import Sequence
 from ConFIG.loss_recorder import LatestLossRecorder, LossRecorder
 from . import *
-from .helpers import *
+from .utils import *
 from .loss_recorder import *
 from .grad_operator import *
 

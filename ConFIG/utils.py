@@ -1,6 +1,7 @@
 #usr/bin/python3
 # -*- coding: UTF-8 -*-
 from . import *
+from warnings import warn
     
 def get_para_vector(network):
     """
@@ -58,7 +59,22 @@ def apply_gradient_vector(network:torch.nn.Module,grad_vec:torch.Tensor):
             par.grad.data=grad_vec[start:end].view(par.grad.data.shape)
             start=end
 
-def get_cos_angle(vector1:torch.Tensor,vector2:torch.Tensor):
+def apply_para_vector(network:torch.nn.Module,para_vec:torch.Tensor):
+    """
+    Applies a parameter vector to the network's parameters.
+    
+    Args:
+        network (torch.nn.Module): The network to apply the parameter vector to.
+        para_vec (torch.Tensor): The parameter vector to apply.
+    """
+    with torch.no_grad():
+        start=0
+        for par in network.parameters():
+            end=start+par.grad.data.view(-1).shape[0]
+            par.data=para_vec[start:end].view(par.grad.data.shape)
+            start=end
+
+def get_cos_similarity(vector1:torch.Tensor,vector2:torch.Tensor):
     """
     Calculates the cosine angle between two vectors.
 
@@ -72,19 +88,21 @@ def get_cos_angle(vector1:torch.Tensor,vector2:torch.Tensor):
     with torch.no_grad():
         return torch.dot(vector1,vector2)/vector1.norm()/vector2.norm()
     
-def unit_vector(vector: torch.Tensor):
+def unit_vector(vector: torch.Tensor, warn_zero=False):
     """
     Compute the unit vector of a given tensor.
 
     Parameters:
         vector (torch.Tensor): The input tensor.
+        warn_zero (bool): Whether to print a warning when the input tensor is zero. default: False
 
     Returns:
         torch.Tensor: The unit vector of the input tensor.
     """
     with torch.no_grad():
         if vector.norm()==0:
-            print("Warning: detected zero vector.")
+            if warn_zero:
+                print("Detected zero vector when doing normalization.")
             return torch.zeros_like(vector)
         else:
             return vector / vector.norm()
@@ -131,7 +149,6 @@ def estimate_conflict(gradients: torch.Tensor):
     unit_grads = gradients / torch.norm(gradients, dim=1).view(-1, 1)
     return unit_grads @ direct_sum
 
-
 def has_zero(lists:Sequence):
     """
     Check if any element in the list is zero.
@@ -162,4 +179,7 @@ class OrderedSliceSelector:
         else:
             indexes = list(range(self.start_index,end_index))
             self.start_index=end_index
-        return indexes,[source_sequence[i] for i in indexes]
+        if len(indexes)==1:
+            return indexes,source_sequence[indexes[0]]
+        else:
+            return indexes,[source_sequence[i] for i in indexes]

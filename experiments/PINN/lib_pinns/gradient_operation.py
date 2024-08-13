@@ -3,7 +3,7 @@ import numpy as np
 import random
 from typing import Sequence
 
-def get_cos_angle(vector1,vector2):
+def get_cos_similarity(vector1,vector2):
     with torch.no_grad():
         return torch.dot(vector1,vector2)/vector1.norm()/vector2.norm()
 
@@ -68,14 +68,14 @@ def config_update_double(grads,return_cos=True):
             cos_1=torch.dot(grads[0],best_direction)
             cos_2=torch.dot(grads[1],best_direction)
             if return_cos:
-                return (cos_1+cos_2)*best_direction,get_cos_angle(grads[0],best_direction)
+                return (cos_1+cos_2)*best_direction,get_cos_similarity(grads[0],best_direction)
             else:
                 return (cos_1+cos_2)*best_direction
 
 def config_update_double_coefs(vector1,vector2,coef1,coef2,length_coef=None,return_cos=True):
     with torch.no_grad():
         norm_1=vector1.norm();norm_2=vector2.norm()
-        cos_angle=get_cos_angle(vector1,vector2)
+        cos_angle=get_cos_similarity(vector1,vector2)
         or_2=vector1-norm_1*cos_angle*(vector2/norm_2)
         or_1=vector2-norm_2*cos_angle*(vector1/norm_1)
         best_direction=unit_vector(coef2*or_1/or_1.norm()+coef1*or_2/or_2.norm())
@@ -86,7 +86,7 @@ def config_update_double_coefs(vector1,vector2,coef1,coef2,length_coef=None,retu
         else:
             best_direction*=length_coef
         if return_cos:
-            return best_direction,get_cos_angle(vector1,best_direction)
+            return best_direction,get_cos_similarity(vector1,best_direction)
         else:
             return best_direction
         
@@ -138,7 +138,7 @@ def config_scale1_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=(norm_1*norm_2)**0.5
             if return_cos:
                 return 2*length_scale*cos*best_direction,cos
@@ -181,7 +181,7 @@ def config_scale2_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=2*norm_1
             if return_cos:
                 return length_scale*cos*best_direction,cos
@@ -224,7 +224,7 @@ def config_scale3_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=torch.max(norm_1,norm_2)*2
             if return_cos:
                 return length_scale*cos*best_direction,cos
@@ -267,7 +267,7 @@ def config_scale4_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=2*(norm_1*norm_2)/(norm_1+norm_2)
             if return_cos:
                 return length_scale*cos*best_direction,cos
@@ -311,7 +311,7 @@ def config_scale5_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=torch.min(norm_1,norm_2)*2
             if return_cos:
                 return length_scale*cos*best_direction,cos
@@ -353,9 +353,9 @@ def config_scale6_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             if return_cos:
-                return (norm_1+norm_2)/2/cos*best_direction,get_cos_angle(grads[0],best_direction)
+                return (norm_1+norm_2)/2/cos*best_direction,get_cos_similarity(grads[0],best_direction)
             else:
                 return (norm_1+norm_2)/2/cos*best_direction
         
@@ -364,7 +364,7 @@ def config_scale6_multi(grads,return_cos=True):
         best_direction=torch.ones(grads.shape[0],device=grads.device)@torch.linalg.pinv(torch.nan_to_num((grads/(grads.norm(dim=1)).unsqueeze(1)).T,0))# optimal point, grad=0, /grad.norm>nan
         best_direction=torch.nan_to_num(best_direction/(best_direction.norm()),0)
         length=torch.sum(torch.stack([grad_i.norm() for grad_i in grads],0),0)/grads.shape[0]
-        cos=get_cos_angle(grads[0],best_direction)
+        cos=get_cos_similarity(grads[0],best_direction)
         if return_cos:
             return length/cos*best_direction,cos
         else:
@@ -396,7 +396,7 @@ def config_scale7_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=(norm_1*norm_2)**0.5
             if return_cos:
                 return length_scale/cos*best_direction,cos
@@ -439,7 +439,7 @@ def config_scale8_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=norm_1
             if return_cos:
                 return length_scale/cos*best_direction,cos
@@ -482,7 +482,7 @@ def config_scale9_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=torch.max(norm_1,norm_2)
             if return_cos:
                 return length_scale/cos*best_direction,cos
@@ -525,7 +525,7 @@ def config_scale10_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=(norm_1*norm_2)/(norm_1+norm_2)
             if return_cos:
                 return length_scale/cos*best_direction,cos
@@ -569,7 +569,7 @@ def config_scale11_double(grads,return_cos=True):
             or_2=grads[0]-norm_1*cos_angle*(grads[1]/norm_2)
             or_1=grads[1]-norm_2*cos_angle*(grads[0]/norm_1)
             best_direction=unit_vector(or_1/or_1.norm()+or_2/or_2.norm())
-            cos=get_cos_angle(grads[0],best_direction)
+            cos=get_cos_similarity(grads[0],best_direction)
             length_scale=torch.min(norm_1,norm_2)
             if return_cos:
                 return length_scale/cos*best_direction,cos

@@ -2,7 +2,8 @@
 # -*- coding: UTF-8 -*-
 from . import *
 
-from .helpers import *
+from typing import Union
+from .utils import *
 from .weight_model import *
 from .length_model import *
 
@@ -27,7 +28,7 @@ def ConFIG_update_double(grad_1:torch.Tensor,grad_2:torch.Tensor,
     with torch.no_grad():
         norm_1=grad_1.norm();norm_2=grad_2.norm()
         unit_1=grad_1/norm_1;unit_2=grad_2/norm_2
-        cos_angle=get_cos_angle(grad_1,grad_2)
+        cos_angle=get_cos_similarity(grad_1,grad_2)
         or_2=grad_1-norm_1*cos_angle*unit_2
         or_1=grad_2-norm_2*cos_angle*unit_1
         unit_or1=unit_vector(or_1);unit_or2=unit_vector(or_2)
@@ -44,7 +45,7 @@ def ConFIG_update_double(grad_1:torch.Tensor,grad_2:torch.Tensor,
                                            )
 
 def ConFIG_update(
-    grads:torch.Tensor,
+    grads:Union[torch.Tensor,Sequence[torch.Tensor]],
     weight_model:WeightModel=EqualWeight(),
     length_model:LengthModel=ProjectionLength(),
     use_latest_square:bool=True,
@@ -54,7 +55,7 @@ def ConFIG_update(
     Performs the standard ConFIG update step.
 
     Args:
-        grads (torch.Tensor): The gradients to update.
+        grads (Sequence[torch.Tensor]): The gradients to update.
         weight_model (WeightModel, optional): The weight model to use for calculating weights. Defaults to EqualWeight().
         length_model (LengthModel, optional): The length model to use for rescaling the length of the target vector. Defaults to ProjectionLength().
         use_latest_square (bool, optional): Whether to use the latest square method for calculating the best direction. Defaults to True.
@@ -63,6 +64,8 @@ def ConFIG_update(
     Returns:
         torch.Tensor: The rescaled length of the target vector.
     """
+    if not isinstance(grads,torch.Tensor):
+        grads=torch.stack(grads)
     with torch.no_grad():
         weights=weight_model.get_weights(gradients=grads,losses=losses,device=grads.device)
         units=torch.nan_to_num((grads/(grads.norm(dim=1)).unsqueeze(1)),0)
@@ -88,12 +91,12 @@ class GradientOperator:
     def __init__(self):
         pass
     
-    def calculate_gradient(self, grads: torch.Tensor, losses: Optional[Sequence] = None):
+    def calculate_gradient(self, grads: Union[torch.Tensor,Sequence[torch.Tensor]], losses: Optional[Sequence] = None):
         """
         Calculates the gradient based on the given gradients and losses.
 
         Args:
-            grads (torch.Tensor): The gradients.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients.
             losses (Optional[Sequence]): The losses (default: None).
 
         Returns:
@@ -105,13 +108,13 @@ class GradientOperator:
         """
         raise NotImplementedError("calculate_gradient method must be implemented")
     
-    def update_gradient(self, network:torch.nn.Module, grads: torch.Tensor, losses: Optional[Sequence] = None):
+    def update_gradient(self, network:torch.nn.Module, grads: Union[torch.Tensor,Sequence[torch.Tensor]], losses: Optional[Sequence] = None):
         """
         Updates the gradient of the network based on the calculated gradient.
 
         Args:
             network: The network.
-            grads (torch.Tensor): The gradients.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients.
             losses (Optional[Sequence]): The losses (default: None).
 
         Returns:
@@ -143,17 +146,19 @@ class ConFIGOperator(GradientOperator):
         self.allow_simplified_model = allow_simplified_model
         self.use_latest_square = use_latest_square
 
-    def calculate_gradient(self, grads: torch.Tensor, losses: Optional[Sequence] = None):
+    def calculate_gradient(self, grads: Union[torch.Tensor,Sequence[torch.Tensor]], losses: Optional[Sequence] = None):
         """
         Calculates the gradient using the ConFIG algorithm.
 
         Args:
-            grads (torch.Tensor): The gradients to be used for calculating the gradient.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients to be used for calculating the gradient.
             losses (Optional[Sequence], optional): The losses to be used for calculating the gradient. Defaults to None.
 
         Returns:
             torch.Tensor: The calculated gradient.
         """
+        if not isinstance(grads,torch.Tensor):
+            grads=torch.stack(grads)
         if grads.shape[0] == 2 and self.allow_simplified_model:
             return ConFIG_update_double(grads[0], grads[1],
                                         weight_model=self.weight_model,
@@ -165,7 +170,6 @@ class ConFIGOperator(GradientOperator):
                                  length_model=self.length_model,
                                  use_latest_square=self.use_latest_square,
                                  losses=losses)
-
 
 class PCGradOperator(GradientOperator):
     """
@@ -182,17 +186,19 @@ class PCGradOperator(GradientOperator):
     """
 
 
-    def calculate_gradient(self, grads: torch.Tensor, losses: Optional[Sequence] = None):
+    def calculate_gradient(self, grads: Union[torch.Tensor,Sequence[torch.Tensor]], losses: Optional[Sequence] = None):
         """
         Calculates the gradient using the ConFIG algorithm.
 
         Args:
-            grads (torch.Tensor): The gradients to be used for calculating the gradient.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients to be used for calculating the gradient.
             losses (Optional[Sequence], optional): The losses to be used for calculating the gradient. Defaults to None.
 
         Returns:
             torch.Tensor: The calculated gradient.
         """
+        if not isinstance(grads,torch.Tensor):
+            grads=torch.stack(grads)
         with torch.no_grad():
             grads_pc=torch.clone(grads)
             length=grads.shape[0]
@@ -220,17 +226,19 @@ class IMTLGOperator(GradientOperator):
     """
 
 
-    def calculate_gradient(self, grads: torch.Tensor, losses: Optional[Sequence] = None):
+    def calculate_gradient(self, grads: Union[torch.Tensor,Sequence[torch.Tensor]], losses: Optional[Sequence] = None):
         """
         Calculates the gradient using the ConFIG algorithm.
 
         Args:
-            grads (torch.Tensor): The gradients to be used for calculating the gradient.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients to be used for calculating the gradient.
             losses (Optional[Sequence], optional): The losses to be used for calculating the gradient. Defaults to None.
 
         Returns:
             torch.Tensor: The calculated gradient.
         """
+        if not isinstance(grads,torch.Tensor):
+            grads=torch.stack(grads)
         with torch.no_grad():
             ut_norm=grads/grads.norm(dim=1).unsqueeze(1)
             ut_norm=torch.nan_to_num(ut_norm,0)
