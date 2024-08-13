@@ -15,7 +15,7 @@
 
 ​	The conFIG method is a generic method for optimization problems involving **multiple loss terms** (e.g., Multi-task Learning, Continuous Learning, and Physics Informed Neural Networks). It prevents the optimization from getting stuck into a local minimum of a specific loss term due to the conflict between losses. On the contrary, it leads the optimization to the **shared minimal of all losses** by providing a **conflict-free update direction.**
 
-<img src="docs/assets/config_illustration.png" alt="image-20240811170722834" style="zoom: 33%;" />
+<img src="docs/assets/config_illustration.png" style="zoom: 33%;" />
 
 * **How does the ConFIG work?**
 
@@ -39,7 +39,7 @@ Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gr
 ## Paper Info
 
 <h4 align="center">ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks</h4>
-<h6 align="center"><img src="./docs/assets/TUM.svg" width="16"><a href="https://tum-pbs.github.io/">Qiang Liu</a>, <img src="./docs/assets/PKU.svg" width="16"><a href="https://rachelcmy.github.io/">Mengyu Chu</a> and <img src="./docs/assets/TUM.svg" width="16"> <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a></h6>
+<h6 align="center"><img src="./docs/assets/TUM.svg" width="16"> <a href="https://tum-pbs.github.io/">Qiang Liu</a>, <img src="./docs/assets/PKU.svg" width="12"> <a href="https://rachelcmy.github.io/">Mengyu Chu</a>, and <img src="./docs/assets/TUM.svg" width="16"> <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a></h6>
 
 <h6 align="center">
     <img src="./docs/assets/TUM.svg" width="16"> Technical University of Munich
