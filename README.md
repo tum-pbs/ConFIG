@@ -19,10 +19,10 @@
 
 * **How does the ConFIG work?**
 
-  The ConFIG method obtains the conflict-free direction by calculating the inverse of the loss-specific gradients matrix:
+​	The ConFIG method obtains the conflict-free direction by calculating the inverse of the loss-specific gradients matrix:
 
 $$
-\boldsymbol{g}_{\text{ConFIG}}=\left(\sum_{i=1}^m \boldsymbol{g}_i^\top\boldsymbol{g}_u\right)\boldsymbol{g}_u,
+\boldsymbol{g}_{ConFIG}=\left(\sum_{i=1}^m \boldsymbol{g}_i^\top\boldsymbol{g}_u\right)\boldsymbol{g}_u,
 $$
 
 $$
@@ -30,7 +30,7 @@ $$
 [\mathcal{U}(\boldsymbol{g}_1),\mathcal{U}(\boldsymbol{g}_2),\cdots, \mathcal{U}(\boldsymbol{g}_m)]^{-\top} \mathbf{1}_m\right].
 $$
 
-Then the dot product between $\boldsymbol{g}_{\text{ConFIG}}$ and each loss-specific gradient is always positive and equal, i.e.. $\boldsymbol{g}_i^\top\boldsymbol{g}_{\text{ConFIG}}=\boldsymbol{g}_i^\top\boldsymbol{g}_{\text{ConFIG}} \quad \forall i,j \in [1,m]$​.
+Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gradient is always positive and equal, i.e., $\boldsymbol{g}_i^\top\boldsymbol{g}_{ConFIG}=\boldsymbol{g}_i^\top\boldsymbol{g}_{ConFIG} \quad \forall i,j \in [1,m]$​.
 
 * **Is the ConFIG Computationally expensive?**
 
@@ -45,6 +45,7 @@ Then the dot product between $\boldsymbol{g}_{\text{ConFIG}}$ and each loss-spec
     <img src="./docs/assets/TUM.svg" width="16"> Technical University of Munich
     <img src="./docs/assets/PKU.svg" width="16"> Peking University
 </h6>
+
 ***Abstract:*** The loss functions of many learning problems contain multiple additive terms that can disagree and yield conflicting update directions. For Physics-Informed Neural Networks (PINNs), loss terms on initial/boundary conditions and physics equations are particularly interesting as they are well-established as highly difficult tasks. To improve learning the challenging multi-objective task posed by PINNs, we propose the ConFIG method, which provides conflict-free updates by ensuring a positive dot product between the final update and each loss-specific gradient. It also maintains consistent optimization rates for all loss terms and dynamically adjusts gradient magnitudes based on conflict levels. We additionally leverage momentum to accelerate optimizations by alternating the back-propagation of different loss terms. The proposed method is evaluated across a range of challenging PINN scenarios, consistently showing superior performance and runtime compared to baseline methods. We also test the proposed method in a classic multi-task benchmark, where the ConFIG method likewise exhibits a highly promising performance. 
 
 ***Read from:*** [[Arxiv](https://arxiv.org/abs/2312.05320)]
