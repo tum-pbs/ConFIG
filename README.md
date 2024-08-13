@@ -8,6 +8,7 @@
 <p align="center">
   [<a href="https://arxiv.org/abs/2312.05320">Arxiv</a>]•[<a href="https://qiauil.github.io/ConFIG/">📖 Documentation & Examples</a>]
 </p>
+
 ## About
 
 * **What is the ConFIG method?**
@@ -99,9 +100,9 @@ for input_i in dataset:
     optimizer.step()
 ```
 
-More details and examples can be found in our [doc page]("https://qiauil.github.io/ConFIG/").
+More details and examples can be found in our [doc page](https://qiauil.github.io/ConFIG/).
 
-To reproduce the result in our paper, please check the [experiments](https://github.com/tum-pbs/ConFIG/tree/main/experiments)folder.
+To reproduce the result in our paper, please check the [experiments](https://github.com/tum-pbs/ConFIG/tree/main/experiments) folder.
 
 ## Additional Information
 
