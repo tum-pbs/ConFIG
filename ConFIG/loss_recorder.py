@@ -1,5 +1,11 @@
 from . import *
 class LossRecorder:
+    """
+    Base class for loss recorders.
+    
+    Args:
+        num_losses (int): The number of losses to record
+    """
     
     def __init__(self,num_losses:int) -> None:
         self.num_losses=num_losses
@@ -7,16 +13,16 @@ class LossRecorder:
     
     def record_loss(self,
                     losses_indexes:Union[int,Sequence[int]], 
-                    losses: Union[float,Sequence]) -> None:
+                    losses: Union[float,Sequence]) -> list:
             """
-            Records the given loss and returns the recorded loss.
+            Records the given loss and returns the recorded losses.
 
             Args:
+                losses_indexes: The index of the loss.
                 losses (torch.Tensor): The loss to record.
-                losses_index: The index of the loss.
 
             Returns:
-                None
+                list: The recorded losses.
 
             Raises:
                 NotImplementedError: If the method is not implemented.
@@ -24,7 +30,7 @@ class LossRecorder:
             """
             raise NotImplementedError("record_loss method must be implemented")
     
-    def record_all_losses(self,losses: Sequence) -> None:
+    def record_all_losses(self,losses: Sequence) -> list:
         """
         Records all the losses and returns the recorded losses.
 
@@ -32,7 +38,7 @@ class LossRecorder:
             losses (torch.Tensor): The losses to record.
 
         Returns:
-            None
+            list: The recorded losses.
 
         """
         if len(losses)!=self.num_losses:
@@ -41,7 +47,7 @@ class LossRecorder:
     
     def _preprocess_losses(self,
                            losses_indexes: Union[int, Sequence[int]],
-                           losses: Union[float, Sequence]):
+                           losses: Union[float, Sequence]) -> Tuple[Sequence[int], Sequence]:
         """
         Preprocesses the losses and their indexes. Recommended to be used in the `record_loss` method.
 
@@ -61,6 +67,9 @@ class LossRecorder:
 class LatestLossRecorder(LossRecorder):
     """
     A loss recorder return the latest losses.
+
+    Args:
+        num_losses (int): The number of losses to record
     """
     
     def __init__(self,num_losses:int) -> None:
@@ -68,16 +77,16 @@ class LatestLossRecorder(LossRecorder):
     
     def record_loss(self,
                     losses_indexes:Union[int,Sequence[int]], 
-                    losses: Union[float,Sequence]) -> None:
+                    losses: Union[float,Sequence]) -> list:
         """
         Records the given loss and returns the recorded loss.
 
         Args:
-            losses (Sequence): The loss to record.
-            losses_index: The index of the loss.
+            losses_indexes: The index of the loss.
+            losses (torch.Tensor): The loss to record.
 
         Returns:
-            None
+            list: The recorded loss.
 
         """
         losses_indexes,losses=self._preprocess_losses(losses_indexes,losses)
@@ -88,6 +97,10 @@ class LatestLossRecorder(LossRecorder):
 class MomentumLossRecorder(LossRecorder):
     """
     A loss recorder that records the momentum of the loss.
+    
+    Args:
+        num_losses (int): The number of losses to record
+        betas (Union[float, Sequence[float]]): The moving average constant.
     """
     
     def __init__(self, num_losses:int, betas: Union[float, Sequence[float]] = 0.9):
@@ -99,16 +112,16 @@ class MomentumLossRecorder(LossRecorder):
     
     def record_loss(self,
                     losses_indexes:Union[int,Sequence[int]], 
-                    losses: Union[float,Sequence]) -> None:
+                    losses: Union[float,Sequence]) -> list:
         """
         Records the given loss and returns the recorded loss.
 
         Args:
-            losses (Sequence): The loss to record.
-            losses_index: The index of the loss.
+            losses_indexes: The index of the loss.
+            losses (torch.Tensor): The loss to record.
 
         Returns:
-            None
+            list: The recorded loss.
 
         """
         losses_indexes,losses=self._preprocess_losses(losses_indexes,losses)

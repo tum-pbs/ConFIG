@@ -11,8 +11,10 @@ theme:
     name: material
     features:
         #- navigation.sections  # Sections are included in the navigation on the left.
+        - navigation.tabs  # Tabs are included in the navigation on the left.
         - toc.integrate  # Table of contents is integrated on the left; does not appear separately on the right.
         - header.autohide  # header disappears as you scroll
+        - navigation.top
     palette:
         - scheme: default
           primary: brown
@@ -21,7 +23,7 @@ theme:
              icon: material/weather-night
              name: Switch to dark mode
         - scheme: slate
-          primary: brown
+          primary: black
           accent: amber
           toggle:
              icon: material/weather-sunny
@@ -29,11 +31,12 @@ theme:
     icon:
         repo: fontawesome/brands/github  # GitHub logo in top right
     logo: assets/config_white.svg
+    favicon: assets/config_colorful.svg
 
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/qiauil
+      link: https://github.com/tum-pbs/ConFIG
 
 
 strict: true  # Don't allow warnings during the build process
@@ -78,7 +81,7 @@ plugins:
                     docstring_style: google
 
 nav:
-    - 'ConFIG': 'index.md'
+    - 'Home': 'index.md'
     - 'Get Started': 'start.md'
     - 'Examples': 
         - 'Toy Example of Muti-task Learning': 'examples/mtl_toy.ipynb'
@@ -88,4 +91,5 @@ nav:
         - "Momentum Operator": 'api/momentum_operator.md'
         - "Weight Model": 'api/weight_model.md'
         - "Length Model": 'api/length_model.md'
+        - "Loss Recorder": 'api/loss_recorder.md'
         - "Utils": 'api/utils.md'

@@ -1,10 +1,22 @@
 from . import *
 
 class WeightModel:
+    """
+    Base class for weight models. 
+    """
     def __init__(self):
         pass
     
     def get_weights(self, gradients:Optional[torch.Tensor]=None,losses:Optional[Sequence]=None):
+        """_summary_
+
+        Args:
+            gradients (Optional[torch.Tensor]): The loss-specific gradients matrix.
+            losses (Optional[Sequence]): The losses.
+
+        Raises:
+            NotImplementedError: _description_
+        """
         raise NotImplementedError("This method must be implemented by the subclass.")
 
 class EqualWeight(WeightModel):
@@ -20,8 +32,8 @@ class EqualWeight(WeightModel):
         Calculate the weights for the given gradients.
 
         Args:
-            gradients (torch.Tensor): The gradients to calculate weights for.
-            losses (Optional[Sequence]): Optional sequence of losses. Not used in this model.
+            gradients (Optional[torch.Tensor]): The loss-specific gradients matrix.
+            losses (Optional[Sequence]): The losses. Not used in this model.
 
         Returns:
             torch.Tensor: A tensor of equal weights for all gradients.

@@ -11,24 +11,21 @@ from .grad_operator import *
 
 class MomentumOperator():
     """
-    Class representing a momentum operator for gradient updates.
+    The base class for the momentum based operator.
     
     Args:
         num_vectors (int): The number of gradient vectors.
-        beta_1 (float): The beta_1 value(s) for momentum update.
-        beta_2 (float): The beta_2 value(s) for momentum update.
-        gradient_operator (GradientOperator, optional): The gradient operator object. Defaults to ConFIGOperator().
-        loss_recorder (LossRecorder, optional): The loss recorder object. If you want to pass loss information to "update_gradient" method or "apply_gradient" method, you need to specify a loss recorder.
-
-    Raises:
-        ValueError: If both `network` and (`len_vectors` or `device`) are provided, or if neither `network` nor
-            (`len_vectors` and `device`) are provided.
+        beta_1 (float): The moving average constant for the first momentum.
+        beta_2 (float): The moving average constant for the second momentum.
+        gradient_operator (GradientOperator, optional): The base gradient operator. Defaults to ConFIGOperator().
+        loss_recorder (LossRecorder, optional): The loss recorder object. 
+            If you want to pass loss information to "update_gradient" method or "apply_gradient" method, you need to specify a loss recorder. Defaults to None.
 
     Methods:
         calculate_gradient(indexes, grads, losses=None):
             Calculates the gradient based on the given indexes, gradients, and losses.
         update_gradient(network, indexes, grads, losses=None):
-            Updates the gradient of the given network based on the given indexes, gradients, and losses.
+            Updates the gradient of the given network with the calculated gradient.
     """
 
     def __init__(self, 
@@ -48,14 +45,18 @@ class MomentumOperator():
     def calculate_gradient(self, 
                            indexes: Union[int,Sequence[int]], 
                            grads: Union[torch.Tensor,Sequence[torch.Tensor]], 
-                           losses: Optional[Union[float,Sequence]] = None):
+                           losses: Optional[Union[float,Sequence]] = None) -> torch.Tensor:
         """
         Calculates the gradient based on the given indexes, gradients, and losses.
 
         Args:
-            indexes (Sequence[int]): The indexes of the gradient vectors and losses to be updated.
-            grads (torch.Tensor): The gradients corresponding to the given indexes.
-            losses (Sequence, optional): The losses corresponding to the given indexes. Defaults to None.
+            indexes (Union[int,Sequence[int]]): The indexes of the gradient vectors and losses to be updated.
+                The momentum with the given indexes will be updated based on the given gradients.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients to update. 
+                It can be a stack of gradient vectors (at dim 0) or a sequence of gradient vectors.
+            losses (Optional[Sequence], optional): The losses associated with the gradients. 
+                The losses will be passed to base gradient operator. If the base gradient operator doesn't require loss information,
+                you can set this value as None. Defaults to None.
 
         Raises:
             NotImplementedError: This method must be implemented in a subclass.
@@ -63,21 +64,25 @@ class MomentumOperator():
         Returns:
             torch.Tensor: The calculated gradient.
         """
+
         raise NotImplementedError("calculate_gradient method must be implemented")
 
     def _preprocess_gradients_losses(self, 
                                      indexes: Union[int,Sequence[int]], 
                                      grads: Union[torch.Tensor,Sequence[torch.Tensor]], 
-                                     losses: Optional[Union[float,Sequence]] = None):
+                                     losses: Optional[Union[float,Sequence]] = None) -> tuple:
         """
         Preprocesses the gradients and losses before applying momentum.
         Recommended to be used in the `update_gradient` method.
-
+        
         Args:
-            indexes (Union[int, Sequence[int]]): The indexes of the gradients to preprocess.
-            grads (torch.Tensor): The gradients to preprocess.
-            losses (Optional[Union[float, Sequence]]): The losses associated with the gradients. 
-                If provided, the loss_recorder must also be provided.
+            indexes (Union[int,Sequence[int]]): The indexes of the gradient vectors and losses to be updated.
+                The momentum with the given indexes will be updated based on the given gradients.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients to update. 
+                It can be a stack of gradient vectors (at dim 0) or a sequence of gradient vectors.
+            losses (Optional[Sequence], optional): The losses associated with the gradients. 
+                The losses will be passed to base gradient operator. If the base gradient operator doesn't require loss information,
+                you can set this value as None. Defaults to None.
 
         Returns:
             Tuple: A tuple containing the preprocessed indexes, gradients, and losses (if provided).
@@ -101,20 +106,68 @@ class MomentumOperator():
     def update_gradient(self, network: torch.nn.Module, 
                         indexes: Union[int,Sequence[int]], 
                         grads: Union[torch.Tensor,Sequence[torch.Tensor]],
-                        losses: Optional[Union[float,Sequence]] = None):
+                        losses: Optional[Union[float,Sequence]] = None) -> None:
         """
-        Updates the gradient of the given network based on the given indexes, gradients, and losses.
+        Updates the gradient of the given network with the calculated gradient.
 
         Args:
-            network (torch.nn.Module): The neural network model.
-            indexes (Sequence[int]): The indexes of the gradient vectors and losses to be updated.
-            grads (torch.Tensor): The gradients corresponding to the given indexes.
-            losses (Sequence, optional): The losses corresponding to the given indexes. Defaults to None.
+            network (torch.nn.Module): The network to update the gradient.
+            indexes (Union[int,Sequence[int]]): The indexes of the gradient vectors and losses to be updated.
+                The momentum with the given indexes will be updated based on the given gradients.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients to update. 
+                It can be a stack of gradient vectors (at dim 0) or a sequence of gradient vectors.
+            losses (Optional[Sequence], optional): The losses associated with the gradients. 
+                The losses will be passed to base gradient operator. If the base gradient operator doesn't require loss information,
+                you can set this value as None. Defaults to None.
+
+        Raises:
+            NotImplementedError: This method must be implemented in a subclass.
+            
+        Returns:
+            None
         """
         apply_gradient_vector(network, self.calculate_gradient(indexes, grads, losses))
 
 
 class PseudoMomentumOperator(MomentumOperator):
+
+    """
+    The major momentum version. 
+    In this operator, the second momentum is estimated by a pseudo gradient based on the result of the gradient operator.
+    NOTE: The momentum-based operator, e.g., Adam, is not recommend when using this operator. Please consider using SGD optimizer.
+    
+    Args:
+        num_vectors (int): The number of gradient vectors.
+        beta_1 (float): The moving average constant for the first momentum.
+        beta_2 (float): The moving average constant for the second momentum.
+        gradient_operator (GradientOperator, optional): The base gradient operator. Defaults to ConFIGOperator().
+        loss_recorder (LossRecorder, optional): The loss recorder object. 
+            If you want to pass loss information to "update_gradient" method or "apply_gradient" method, you need to specify a loss recorder. Defaults to None.
+
+    Methods:
+        calculate_gradient(indexes, grads, losses=None):
+            Calculates the gradient based on the given indexes, gradients, and losses.
+        update_gradient(network, indexes, grads, losses=None):
+            Updates the gradient of the given network with the calculated gradient.
+            
+    Examples:
+    ```python
+    from ConFIG.momentum_operator import PseudoMomentumOperator
+    from ConFIG.utils import get_gradient_vector,apply_gradient_vector
+    optimizer=torch.Adam(network.parameters(),lr=1e-3)
+    operator=PseudoMomentumOperator(num_vector=len(loss_fns)) # initialize operator, the only difference here is we need to specify the number of gradient vectors.
+    for input_i in dataset:
+        grads=[]
+        for loss_fn in loss_fns:
+            optimizer.zero_grad()
+            loss_i=loss_fn(input_i)
+            loss_i.backward()
+            grads.append(get_gradient_vector(network))
+        g_config=operator.calculate_gradient(grads) # calculate the conflict-free direction
+        apply_gradient_vector(network) # or simply use `operator.update_gradient(network,grads)` to calculate and set the condlict-free direction to the network
+        optimizer.step()
+    ```
+    """
     
     def __init__(self, 
                 num_vectors: int, 
@@ -144,7 +197,25 @@ class PseudoMomentumOperator(MomentumOperator):
     def calculate_gradient(self, 
                            indexes: Union[int,Sequence[int]], 
                            grads: Union[torch.Tensor,Sequence[torch.Tensor]], 
-                           losses: Optional[Union[float,Sequence]] = None):
+                           losses: Optional[Union[float,Sequence]] = None)->torch.Tensor:
+        """
+        Calculates the gradient based on the given indexes, gradients, and losses.
+
+        Args:
+            indexes (Union[int,Sequence[int]]): The indexes of the gradient vectors and losses to be updated.
+                The momentum with the given indexes will be updated based on the given gradients.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients to update. 
+                It can be a stack of gradient vectors (at dim 0) or a sequence of gradient vectors.
+            losses (Optional[Sequence], optional): The losses associated with the gradients. 
+                The losses will be passed to base gradient operator. If the base gradient operator doesn't require loss information,
+                you can set this value as None. Defaults to None.
+
+        Raises:
+            NotImplementedError: This method must be implemented in a subclass.
+            
+        Returns:
+            torch.Tensor: The calculated gradient.
+        """
         with torch.no_grad():
             indexes,grads,losses=self._preprocess_gradients_losses(indexes,grads,losses)
             for i in range(len(indexes)):
@@ -169,6 +240,27 @@ class PseudoMomentumOperator(MomentumOperator):
         return final_grad
     
 class SeparateMomentumOperator(MomentumOperator):
+    
+    """
+    In this operator, each gradient has its own second gradient. The gradient operator is applied on the rescaled momentum.
+    NOTE: Please consider using the PseudoMomentumOperator since this operator does not give good performance according to our research.
+    The momentum-based operator, e.g., Adam, is not recommend when using this operator. Please consider using SGD optimizer.
+    
+    Args:
+        num_vectors (int): The number of gradient vectors.
+        beta_1 (float): The moving average constant for the first momentum.
+        beta_2 (float): The moving average constant for the second momentum.
+        gradient_operator (GradientOperator, optional): The base gradient operator. Defaults to ConFIGOperator().
+        loss_recorder (LossRecorder, optional): The loss recorder object. 
+            If you want to pass loss information to "update_gradient" method or "apply_gradient" method, you need to specify a loss recorder. Defaults to None.
+
+    Methods:
+        calculate_gradient(indexes, grads, losses=None):
+            Calculates the gradient based on the given indexes, gradients, and losses.
+        update_gradient(network, indexes, grads, losses=None):
+            Updates the gradient of the given network with the calculated gradient.
+            
+    """
     
     def __init__(self, 
                 num_vectors: int, 
@@ -195,7 +287,25 @@ class SeparateMomentumOperator(MomentumOperator):
     def calculate_gradient(self, 
                            indexes: Union[int,Sequence[int]], 
                            grads: Union[torch.Tensor,Sequence[torch.Tensor]], 
-                           losses: Optional[Union[float,Sequence]] = None):
+                           losses: Optional[Union[float,Sequence]] = None)->torch.Tensor:
+        """
+        Calculates the gradient based on the given indexes, gradients, and losses.
+
+        Args:
+            indexes (Union[int,Sequence[int]]): The indexes of the gradient vectors and losses to be updated.
+                The momentum with the given indexes will be updated based on the given gradients.
+            grads (Union[torch.Tensor,Sequence[torch.Tensor]]): The gradients to update. 
+                It can be a stack of gradient vectors (at dim 0) or a sequence of gradient vectors.
+            losses (Optional[Sequence], optional): The losses associated with the gradients. 
+                The losses will be passed to base gradient operator. If the base gradient operator doesn't require loss information,
+                you can set this value as None. Defaults to None.
+
+        Raises:
+            NotImplementedError: This method must be implemented in a subclass.
+            
+        Returns:
+            torch.Tensor: The calculated gradient.
+        """
         with torch.no_grad():
             indexes,grads,losses=self._preprocess_gradients_losses(indexes,grads,losses)
             for i in range(len(indexes)):

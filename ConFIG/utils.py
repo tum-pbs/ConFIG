@@ -2,8 +2,9 @@
 # -*- coding: UTF-8 -*-
 from . import *
 from warnings import warn
+import numpy as np
     
-def get_para_vector(network):
+def get_para_vector(network) -> torch.Tensor:
     """
     Returns the parameter vector of the given network.
 
@@ -23,7 +24,7 @@ def get_para_vector(network):
                 para_vec = torch.cat((para_vec, viewed))
         return para_vec
     
-def get_gradient_vector(network):
+def get_gradient_vector(network)->torch.Tensor:
     """
     Returns the gradient vector of the given network.
 
@@ -43,7 +44,7 @@ def get_gradient_vector(network):
                 grad_vec = torch.cat((grad_vec, viewed))
         return grad_vec
 
-def apply_gradient_vector(network:torch.nn.Module,grad_vec:torch.Tensor):
+def apply_gradient_vector(network:torch.nn.Module,grad_vec:torch.Tensor)->None:
     """
     Applies a gradient vector to the network's parameters.
 
@@ -59,7 +60,7 @@ def apply_gradient_vector(network:torch.nn.Module,grad_vec:torch.Tensor):
             par.grad.data=grad_vec[start:end].view(par.grad.data.shape)
             start=end
 
-def apply_para_vector(network:torch.nn.Module,para_vec:torch.Tensor):
+def apply_para_vector(network:torch.nn.Module,para_vec:torch.Tensor)->None:
     """
     Applies a parameter vector to the network's parameters.
     
@@ -74,7 +75,7 @@ def apply_para_vector(network:torch.nn.Module,para_vec:torch.Tensor):
             par.data=para_vec[start:end].view(par.grad.data.shape)
             start=end
 
-def get_cos_similarity(vector1:torch.Tensor,vector2:torch.Tensor):
+def get_cos_similarity(vector1:torch.Tensor,vector2:torch.Tensor)->torch.Tensor:
     """
     Calculates the cosine angle between two vectors.
 
@@ -88,7 +89,7 @@ def get_cos_similarity(vector1:torch.Tensor,vector2:torch.Tensor):
     with torch.no_grad():
         return torch.dot(vector1,vector2)/vector1.norm()/vector2.norm()
     
-def unit_vector(vector: torch.Tensor, warn_zero=False):
+def unit_vector(vector: torch.Tensor, warn_zero=False)->torch.Tensor:
     """
     Compute the unit vector of a given tensor.
 
@@ -109,7 +110,7 @@ def unit_vector(vector: torch.Tensor, warn_zero=False):
 
 def transfer_coef_double(weights: torch.tensor, 
                          unit_vec_1: torch.tensor, unit_vec_2: torch.tensor,
-                         or_unit_vec_1: torch.tensor, or_unit_vec_2: torch.tensor):
+                         or_unit_vec_1: torch.tensor, or_unit_vec_2: torch.tensor)-> tuple:
     """
     Transfer the angle weights to a length coefficient for ConFIG method with two vectors.
     
@@ -127,7 +128,7 @@ def transfer_coef_double(weights: torch.tensor,
         unit_vecs (torch.tensor): Unit vectors of the orthogonal components. It should have shape (2,k) where k is the length of the vector.
 
     Returns:
-        torch.tensor: The coefficients for the two vectors.
+        tuple: The coefficients for the two vectors.
 
     Raises:
         ValueError: If the number of weights or unit vectors is not equal to 2.
@@ -135,7 +136,7 @@ def transfer_coef_double(weights: torch.tensor,
 
     return torch.dot(or_unit_vec_2,unit_vec_1)/(weights[0]/weights[1]*torch.dot(or_unit_vec_1,unit_vec_2)),1
 
-def estimate_conflict(gradients: torch.Tensor):
+def estimate_conflict(gradients: torch.Tensor)->torch.Tensor:
     """
     Estimates the degree of conflict of gradients.
 
@@ -149,7 +150,7 @@ def estimate_conflict(gradients: torch.Tensor):
     unit_grads = gradients / torch.norm(gradients, dim=1).view(-1, 1)
     return unit_grads @ direct_sum
 
-def has_zero(lists:Sequence):
+def has_zero(lists:Sequence)->bool:
     """
     Check if any element in the list is zero.
 
@@ -165,10 +166,25 @@ def has_zero(lists:Sequence):
     return False
 
 class OrderedSliceSelector:
+    """
+    Selects a slice of the source sequence in order.
+    Usually used for selecting loss functions/gradients/losses in momentum-based method if you want to update more tha one gradient in a single iteration.
+    
+    """
     def __init__(self):
         self.start_index=0
         
-    def select(self, n:int, source_sequence:Sequence):
+    def select(self, n:int, source_sequence:Sequence) -> Tuple[Sequence,Union[float,Sequence]]:
+        """
+        Selects a slice of the source sequence in order.
+        
+        Args:
+            n (int): The length of the target slice.
+            source_sequence (Sequence): The source sequence to select from.
+        
+        Returns:
+            Tuple[Sequence,Union[float,Sequence]]: A tuple containing the indexes of the selected slice and the selected slice.
+        """
         if n > len(source_sequence):
             raise ValueError("n must be less than or equal to the length of the source sequence")
         end_index = self.start_index + n
@@ -179,6 +195,31 @@ class OrderedSliceSelector:
         else:
             indexes = list(range(self.start_index,end_index))
             self.start_index=end_index
+        if len(indexes)==1:
+            return indexes,source_sequence[indexes[0]]
+        else:
+            return indexes,[source_sequence[i] for i in indexes]
+        
+class RandomSliceSelector:
+    """
+    Selects a slice of the source sequence randomly.
+    Usually used for selecting loss functions/gradients/losses in momentum-based method if you want to update more tha one gradient in a single iteration.
+    """
+        
+    def select(self, n:int, source_sequence:Sequence)-> Tuple[Sequence,Union[float,Sequence]]:
+        """
+        Selects a slice of the source sequence randomly.
+        
+        Args:
+            n (int): The length of the target slice.
+            source_sequence (Sequence): The source sequence to select from.
+        
+        Returns:
+            Tuple[Sequence,Union[float,Sequence]]: A tuple containing the indexes of the selected slice and the selected slice.
+        """
+        if n > len(source_sequence):
+            raise ValueError("n must be less than or equal to the length of the source sequence")
+        indexes = np.random.choice(len(source_sequence),n,replace=False)
         if len(indexes)==1:
             return indexes,source_sequence[indexes[0]]
         else:
