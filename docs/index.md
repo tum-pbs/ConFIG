@@ -1,9 +1,9 @@
-> *** Note: The Arxiv paper is being uploaded and this repository is still being edited. ***
 ---
 hide:
   - navigation
   - toc
 ---
+**Note: The Arxiv paper is being uploaded and this repository is still being edited.**
 
 <p align="center">
   <img src="./assets/config.png" width="400"/>
