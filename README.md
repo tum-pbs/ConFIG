@@ -1,3 +1,4 @@
+> *** Note: The Arxiv paper is being uploaded and this repository is still being edited. ***
 <h1 align="center">
   <img src="./docs/assets/config.png" width="400"/>
 </h1>
@@ -32,7 +33,7 @@
 [\mathcal{U}(\boldsymbol{g}_1),\mathcal{U}(\boldsymbol{g}_2),\cdots, \mathcal{U}(\boldsymbol{g}_m)]^{-\top} \mathbf{1}_m\right].
 ```
 
-Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gradient is always positive and equal, i.e., $`\boldsymbol{g}_{i}^{\top}\boldsymbol{g}_{ConFIG}=\boldsymbol{g}_{i}^{\top}\boldsymbol{g}_{ConFIG}> 0  \quad \forall i,j \in [1,m]`$​.
+Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gradient is always positive and equal, i.e., $`\boldsymbol{g}_{i}^{\top}\boldsymbol{g}_{ConFIG}=\boldsymbol{g}_{j}^{\top}\boldsymbol{g}_{ConFIG}> 0  \quad \forall i,j \in [1,m]`$​.
 
 * **Is the ConFIG Computationally expensive?**
 
@@ -56,7 +57,7 @@ Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gr
 
 ```latex
 @article{Liu2024ConFIG,
-author = {Liu, Qiang and Chu, Mengyu and Thuerey, Nils},
+author = {Qiang Liu and Mengyu Chu and Nils Thuerey},
 title = {ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks},
 year={2024},
 url={arXiv XXXX},
