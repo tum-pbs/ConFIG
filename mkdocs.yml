@@ -15,6 +15,7 @@ theme:
         - toc.integrate  # Table of contents is integrated on the left; does not appear separately on the right.
         - header.autohide  # header disappears as you scroll
         - navigation.top
+        - navigation.footer
     palette:
         - scheme: default
           primary: brown
@@ -30,7 +31,7 @@ theme:
              name: Switch to light mode
     icon:
         repo: fontawesome/brands/github  # GitHub logo in top right
-    logo: assets/config_white.svg
+    logo: assets/config_white.png
     favicon: assets/config_colorful.svg
 
 extra:

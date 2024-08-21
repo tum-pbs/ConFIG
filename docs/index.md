@@ -8,7 +8,7 @@ hide:
 <p align="center">
   <img src="./assets/config.png" width="400"/>
 </p>
-<h4 align="center">Towards Conflict-free Training for everything!</h4>
+<h4 align="center">Towards Conflict-free Training for Everything and Everyone!</h4>
 
 <p align="center">
   [ <a href="https://arxiv.org/abs/2312.05320">📄 Research Paper</a> ]•[ <a href="https://github.com/tum-pbs/ConFIG"><img src="./assets/github.svg" width="16"> GitHub Repository</a> ]
@@ -20,7 +20,7 @@ hide:
 
 * **What is the ConFIG method?**
 
-​	The conFIG method is a generic method for optimization problems involving **multiple loss terms** (e.g., Multi-task Learning, Continuous Learning, and Physics Informed Neural Networks). It prevents the optimization from getting stuck into a local minimum of a specific loss term due to the conflict between losses. On the contrary, it leads the optimization to the **shared minimal of all losses** by providing a **conflict-free update direction.**
+​	The conFIG method is a generic method for optimization problems involving **multiple loss terms** (e.g., Multi-task Learning, Continuous Learning, and Physics Informed Neural Networks). It prevents the optimization from getting stuck into a local minimum of a specific loss term due to the conflict between losses. On the contrary, it leads the optimization to the **shared minimum of all losses** by providing a **conflict-free update direction.**
 
 <p align="center">
 <img src="./assets/config_illustration.png" style="zoom: 33%;" />
@@ -41,7 +41,7 @@ $$
 
 Then the dot product between $\mathbf{g}_{ConFIG}$ and each loss-specific gradient is always positive and equal, i.e., $\mathbf{g}_{i}^{\top}\mathbf{g}_{ConFIG}=\mathbf{g}_{j}^{\top}\mathbf{g}_{ConFIG} > 0 \quad \forall i,j \in [1,m]$​.
 
-* **Is the ConFIG Computationally expensive?**
+* **Is the ConFIG computationally expensive?**
 
 ​	Like many other gradient-based methods, ConFIG needs to calculate each loss's gradient in every optimization iteration, which could be computationally expensive when the number of losses increases. However, we also introduce a **momentum-based method** where we can reduce the computational cost **close to or even lower than a standard optimization procedure** with a slight degeneration in accuracy. This momentum-based method is also applied to another gradient-based method.
 
