@@ -1,9 +1,7 @@
 ---
 hide:
-  - navigation
   - toc
 ---
-**Note: The Arxiv paper is being uploaded and this repository is still being edited.**
 
 <p align="center">
   <img src="./assets/config.png" width="400"/>
@@ -11,7 +9,7 @@ hide:
 <h4 align="center">Towards Conflict-free Training for Everything and Everyone!</h4>
 
 <p align="center">
-  [ <a href="https://arxiv.org/abs/2312.05320">📄 Research Paper</a> ]•[ <a href="https://github.com/tum-pbs/ConFIG"><img src="./assets/github.svg" width="16"> GitHub Repository</a> ]
+  [ <a href="https://arxiv.org/abs/2408.11104">📄 Research Paper</a> ]•[ <a href="https://github.com/tum-pbs/ConFIG"><img src="./assets/github.svg" width="16"> GitHub Repository</a> ]
 </p>
 
 ---
@@ -59,7 +57,7 @@ Then the dot product between $\mathbf{g}_{ConFIG}$ and each loss-specific gradie
 
 ***Abstract:*** The loss functions of many learning problems contain multiple additive terms that can disagree and yield conflicting update directions. For Physics-Informed Neural Networks (PINNs), loss terms on initial/boundary conditions and physics equations are particularly interesting as they are well-established as highly difficult tasks. To improve learning the challenging multi-objective task posed by PINNs, we propose the ConFIG method, which provides conflict-free updates by ensuring a positive dot product between the final update and each loss-specific gradient. It also maintains consistent optimization rates for all loss terms and dynamically adjusts gradient magnitudes based on conflict levels. We additionally leverage momentum to accelerate optimizations by alternating the back-propagation of different loss terms. The proposed method is evaluated across a range of challenging PINN scenarios, consistently showing superior performance and runtime compared to baseline methods. We also test the proposed method in a classic multi-task benchmark, where the ConFIG method likewise exhibits a highly promising performance. 
 
-***Read from:*** [[Arxiv](https://arxiv.org/abs/2312.05320)]
+***Read from:*** [[Arxiv](https://arxiv.org/abs/2408.11104)]
 
 ***Cite as:*** 
 
@@ -68,7 +66,7 @@ Then the dot product between $\mathbf{g}_{ConFIG}$ and each loss-specific gradie
 author = {Qiang Liu and Mengyu Chu and Nils Thuerey},
 title = {ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks},
 year={2024},
-url={arXiv XXXX},
+url={https://arxiv.org/abs/2408.11104},
 }
 ```
 

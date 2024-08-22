@@ -82,7 +82,8 @@ def ConFIG_update(
         length_model (LengthModel, optional): The length model for rescaling the length of the final gradient. 
             Defaults to ProjectionLength(), which will project each gradient vector onto the final gradient vector to get the final length.
         use_latest_square (bool, optional): Whether to use the latest square method for calculating the best direction. 
-            If set to False, we will directly calculate the pseudo-inverse of the gradient matrix. Recommended to set to True. Defaults to True.
+            If set to False, we will directly calculate the pseudo-inverse of the gradient matrix. See `torch.linalg.pinv` and `torch.linalg.lstsq` for more details.
+            Recommended to set to True. Defaults to True.
         losses (Optional[Sequence], optional): The losses associated with the gradients. 
             The losses will be passed to the weight and length model. If your weight/length model doesn't require loss information,
             you can set this value as None. Defaults to None.
@@ -185,7 +186,8 @@ class ConFIGOperator(GradientOperator):
         allow_simplified_model (bool, optional): Whether to allow simplified model for calculating the gradient. 
             If set to True, will use simplified form of ConFIG method when there are only two losses (ConFIG_update_double). Defaults to True.
         use_latest_square (bool, optional): Whether to use the latest square method for calculating the best direction. 
-            If set to False, we will directly calculate the pseudo-inverse of the gradient matrix. Recommended to set to True. Defaults to True.
+            If set to False, we will directly calculate the pseudo-inverse of the gradient matrix. See `torch.linalg.pinv` and `torch.linalg.lstsq` for more details.
+            Recommended to set to True. Defaults to True.
     
     Examples:
         ```python

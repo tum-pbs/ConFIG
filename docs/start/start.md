@@ -1,4 +1,4 @@
-# Get Started
+# Quick Start
 
 ## Installation
 

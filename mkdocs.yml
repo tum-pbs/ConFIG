@@ -11,11 +11,13 @@ theme:
     name: material
     features:
         #- navigation.sections  # Sections are included in the navigation on the left.
-        - navigation.tabs  # Tabs are included in the navigation on the left.
-        - toc.integrate  # Table of contents is integrated on the left; does not appear separately on the right.
+        #- navigation.tabs  # Tabs are included in the navigation on the left.
+        #- toc.integrate  # Table of contents is integrated on the left; does not appear separately on the right.
+        - toc.follow
         - header.autohide  # header disappears as you scroll
         - navigation.top
         - navigation.footer
+        - navigation.path
     palette:
         - scheme: default
           primary: brown
@@ -83,14 +85,16 @@ plugins:
 
 nav:
     - 'Home': 'index.md'
-    - 'Get Started': 'start.md'
-    - 'Examples': 
-        - 'Toy Example of Muti-task Learning': 'examples/mtl_toy.ipynb'
-        - "Solve Burgers' Equation with PINN": 'examples/pinn_burgers.ipynb'
-    - 'API Reference':
-        - "Gradient Operator": 'api/grad_operator.md'
-        - "Momentum Operator": 'api/momentum_operator.md'
-        - "Weight Model": 'api/weight_model.md'
-        - "Length Model": 'api/length_model.md'
-        - "Loss Recorder": 'api/loss_recorder.md'
-        - "Utils": 'api/utils.md'
+    - '1. Get Started': 
+        - '1.1. Quick Start': 'start/start.md'
+        - '1.2. Theory Introduction': 'start/theory.md'
+    - '2. Examples': 
+        - '2.1. Toy Example of Muti-task Learning': 'examples/mtl_toy.ipynb'
+        - "2.2. Solve Burgers' Equation with PINN": 'examples/pinn_burgers.ipynb'
+    - '3. API Reference':
+        - "3.1. Gradient Operator": 'api/grad_operator.md'
+        - "3.2. Momentum Operator": 'api/momentum_operator.md'
+        - "3.3. Weight Model": 'api/weight_model.md'
+        - "4.4. Length Model": 'api/length_model.md'
+        - "4.5. Loss Recorder": 'api/loss_recorder.md'
+        - "4.6. Utils": 'api/utils.md'
