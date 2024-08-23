@@ -30,8 +30,8 @@ def ConFIG_update_double(grad_1:torch.Tensor,grad_2:torch.Tensor,
         
     Examples:
         ```python
-        from ConFIG.grad_operator import ConFIG_update_double
-        from ConFIG.utils import get_gradient_vector,apply_gradient_vector
+        from conflictfree.grad_operator import ConFIG_update_double
+        from conflictfree.utils import get_gradient_vector,apply_gradient_vector
         optimizer=torch.Adam(network.parameters(),lr=1e-3)
         for input_i in dataset:
             grads=[] # we record gradients rather than losses
@@ -93,8 +93,8 @@ def ConFIG_update(
         
     Examples:
         ```python
-        from ConFIG.grad_operator import ConFIG_update
-        from ConFIG.utils import get_gradient_vector,apply_gradient_vector
+        from conflictfree.grad_operator import ConFIG_update
+        from conflictfree.utils import get_gradient_vector,apply_gradient_vector
         optimizer=torch.Adam(network.parameters(),lr=1e-3)
         for input_i in dataset:
             grads=[] # we record gradients rather than losses
@@ -191,8 +191,8 @@ class ConFIGOperator(GradientOperator):
     
     Examples:
         ```python
-        from ConFIG.grad_operator import ConFIGOperator
-        from ConFIG.utils import get_gradient_vector,apply_gradient_vector
+        from conflictfree.grad_operator import ConFIGOperator
+        from conflictfree.utils import get_gradient_vector,apply_gradient_vector
         optimizer=torch.Adam(network.parameters(),lr=1e-3)
         operator=ConFIGOperator() # initialize operator
         for input_i in dataset:

@@ -1,9 +1,9 @@
 from torch import Tensor
 from torch.nn.modules import Module
-from ConFIG import Sequence
-from ConFIG.grad_operator import ConFIGOperator, GradientOperator
-from ConFIG.utils import Sequence
-from ConFIG.loss_recorder import LatestLossRecorder, LossRecorder
+from conflictfree import Sequence
+from conflictfree.grad_operator import ConFIGOperator, GradientOperator
+from conflictfree.utils import Sequence
+from conflictfree.loss_recorder import LatestLossRecorder, LossRecorder
 from . import *
 from .utils import *
 from .loss_recorder import *
@@ -152,8 +152,8 @@ class PseudoMomentumOperator(MomentumOperator):
             
     Examples:
     ```python
-    from ConFIG.momentum_operator import PseudoMomentumOperator
-    from ConFIG.utils import get_gradient_vector,apply_gradient_vector
+    from conflictfree.momentum_operator import PseudoMomentumOperator
+    from conflictfree.utils import get_gradient_vector,apply_gradient_vector
     optimizer=torch.Adam(network.parameters(),lr=1e-3)
     operator=PseudoMomentumOperator(num_vector=len(loss_fns)) # initialize operator, the only difference here is we need to specify the number of gradient vectors.
     for input_i in dataset:

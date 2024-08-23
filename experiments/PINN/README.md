@@ -12,7 +12,7 @@ The following code shows how to start a training:
 
 ```python
 from lib_pinns.burgers.trainer import *
-from ConFIG.grad_operator import *
+from conflictfree.grad_operator import *
 
 SAVE_PATH="./PINN_trained/burgers/"
 

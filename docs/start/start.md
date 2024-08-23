@@ -2,8 +2,10 @@
 
 ## Installation
 
-* Install through `pip`: `pip install git+https://github.com/tum-pbs/ConFIG`
-* Install locally: Download and run `pip install .` or `install.sh` in terminal.
+* Install through `pip`: `pip install conflictfree`
+* Install from repository online: `pip install git+https://github.com/tum-pbs/ConFIG`
+* Install from repository offline: Download the repository and run `pip install .` or `install.sh` in terminal.
+* Install from released wheel: Download the wheel and run `pip install conflictfree-x.x.x-py3-none-any.whl` in terminal.
 
 ## Use ConFIG method
 
@@ -23,8 +25,8 @@ for input_i in dataset:
 To use our ConFIG method, you can simply modify the code as
 
 ```python
-from ConFIG.grad_operator import ConFIG_update
-from ConFIG.utils import get_gradient_vector,apply_gradient_vector
+from conflictfree.grad_operator import ConFIG_update
+from conflictfree.utils import get_gradient_vector,apply_gradient_vector
 optimizer=torch.Adam(network.parameters(),lr=1e-3)
 for input_i in dataset:
     grads=[] # we record gradients rather than losses
@@ -41,8 +43,8 @@ for input_i in dataset:
 Or, you can use our `ConFIGOperator` class:
 
 ```python
-from ConFIG.grad_operator import ConFIGOperator
-from ConFIG.utils import get_gradient_vector,apply_gradient_vector
+from conflictfree.grad_operator import ConFIGOperator
+from conflictfree.utils import get_gradient_vector,apply_gradient_vector
 optimizer=torch.Adam(network.parameters(),lr=1e-3)
 operator=ConFIGOperator() # initialize operator
 for input_i in dataset:
@@ -64,8 +66,8 @@ The `ConFIGOperator` class and `ConFIG_update` is basically the same, you can ch
 The basic usage of `M-ConFIG` method in our code is similar to `ConFIGOperator` :
 
 ```python
-from ConFIG.momentum_operator import PseudoMomentumOperator
-from ConFIG.utils import get_gradient_vector,apply_gradient_vector
+from conflictfree.momentum_operator import PseudoMomentumOperator
+from conflictfree.utils import get_gradient_vector,apply_gradient_vector
 optimizer=torch.Adam(network.parameters(),lr=1e-3)
 operator=PseudoMomentumOperator(num_vector=len(loss_fns)) # initialize operator, the only difference here is we need to specify the number of gradient vectors.
 for input_i in dataset:

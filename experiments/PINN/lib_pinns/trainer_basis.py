@@ -5,8 +5,8 @@ from .network_initialization import *
 from .helpers import *
 from .loss_weighter import *
 
-from ConFIG.grad_operator import *
-from ConFIG.momentum_operator import *
+from conflictfree.grad_operator import *
+from conflictfree.momentum_operator import *
 
 def get_cosine_constant_lambda(initial_lr,final_lr,epochs,warmup_epoch,constant_start_epoch):
     """

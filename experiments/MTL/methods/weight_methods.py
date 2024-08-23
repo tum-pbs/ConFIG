@@ -11,9 +11,9 @@ from scipy.optimize import minimize
 
 from methods.min_norm_solvers import MinNormSolver, gradient_normalizers
 
-from ConFIG.grad_operator import *
-from ConFIG.momentum_operator import *
-from ConFIG.helpers import OrderedSliceSelector
+from conflictfree.grad_operator import *
+from conflictfree.momentum_operator import *
+from conflictfree.helpers import OrderedSliceSelector
 
 EPS = 1e-8 # for numerical stability
 

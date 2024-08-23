@@ -67,8 +67,10 @@ url={https://arxiv.org/abs/2408.11104},
 
 ## Installation
 
-* Install through `pip`: `pip install git+https://github.com/tum-pbs/ConFIG`
-* Install locally: Download and run `pip install .` or `install.sh` in terminal.
+* Install through `pip`: `pip install conflictfree`
+* Install from repository online: `pip install git+https://github.com/tum-pbs/ConFIG`
+* Install from repository offline: Download the repository and run `pip install .` or `install.sh` in terminal.
+* Install from released wheel: Download the wheel and run `pip install conflictfree-x.x.x-py3-none-any.whl` in terminal.
 
 ## Usage
 
@@ -90,8 +92,8 @@ for input_i in dataset:
 With `ConFIG`:
 
 ```python
-from ConFIG.grad_operator import ConFIG_update
-from ConFIG.utils import get_gradient_vector,apply_gradient_vector
+from conflictfree.grad_operator import ConFIG_update
+from conflictfree.utils import get_gradient_vector,apply_gradient_vector
 optimizer=torch.Adam(network.parameters(),lr=1e-3)
 for input_i in dataset:
     grads=[]

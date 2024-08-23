@@ -14,9 +14,9 @@ def get_install_requires():
     return targets
 
 setuptools.setup(
-    name="ConFIG",
-    version="0.1.1",
-    author="Qiang Liu, Nils Thuerey",
+    name="conflictfree",
+    version="0.1.2",
+    author="Qiang Liu, Mengyu Chu, Nils Thuerey",
     author_email="qiangliu.7@outlook.com",
     description="Official implementation of Conflict-free Inverse Gradients method",
     long_description=long_description,
