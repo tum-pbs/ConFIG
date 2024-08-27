@@ -2,7 +2,7 @@ The `weight_model` module contains classes for calculating the direction weight 
 The `EqualWeight` class is the default weight model for the ConFIG algorithm. You can create a custom weight model by inheriting from the `WeightModel` class.
 
 ## Weight Model
-::: ConFIG.weight_model.EqualWeight
+::: conflictfree.weight_model.EqualWeight
 
 ## Base Class of Weight Model
-::: ConFIG.weight_model.WeightModel
+::: conflictfree.weight_model.WeightModel

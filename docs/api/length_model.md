@@ -2,7 +2,7 @@ The `length_model` module contains classes for rescaling the magnitude of the fi
 The `ProjectionLength` class is the default length model for the ConFIG algorithm. You can create a custom length model by inheriting from the `LengthModel` class.
 
 ## Length Model
-::: ConFIG.length_model.ProjectionLength
+::: conflictfree.length_model.ProjectionLength
 
 ## Base Class of Length Model
-::: ConFIG.length_model.LengthModel
+::: conflictfree.length_model.LengthModel

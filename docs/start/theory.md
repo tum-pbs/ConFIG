@@ -57,7 +57,7 @@ $$
 [\mathcal{U}(\mathbf{g}_1),\mathcal{U}(\mathbf{g}_2),\cdots, \mathcal{U}(\mathbf{g}_m)]^{-\top} \mathbf{1}_m\right].
 $$
 
-Here, $\mathbf{1}_m$ is a unit vector with $m$ components. These two equations are implemented as [ConFIG.grad_operator.ConFIG_update()](../../api/grad_operator/#ConFIG.grad_operator.ConFIG_update) and [ConFIG.grad_operator.ConFIGOperator.calculate_gradient()](../../api/grad_operator/#ConFIG.grad_operator.ConFIGOperator.calculate_gradient). Meanwhile, we also provide [weight_model](../../api/weight_model/) to allow you implement different direction weights ($\hat{\mathbf{w}}=\mathbf{1}_m$ as default) and [length_model](../../api/length_model/) to allow you design different length projection (the above adaptive strategy as default). We encourage you to design and try different weight/length models and compare the result with default configurations.
+Here, $\mathbf{1}_m$ is a unit vector with $m$ components. These two equations are implemented as [conflictfree.grad_operator.ConFIG_update()](../../api/grad_operator/#conflictfree.grad_operator.ConFIG_update) and [conflictfree.grad_operator.ConFIGOperator.calculate_gradient()](../../api/grad_operator/#conflictfree.grad_operator.ConFIGOperator.calculate_gradient). Meanwhile, we also provide [weight_model](../../api/weight_model/) to allow you implement different direction weights ($\hat{\mathbf{w}}=\mathbf{1}_m$ as default) and [length_model](../../api/length_model/) to allow you design different length projection (the above adaptive strategy as default). We encourage you to design and try different weight/length models and compare the result with default configurations.
 
 
 ## ConFIG in two-loss scenario
@@ -73,7 +73,7 @@ $$
 
 where $\mathcal{O}(\mathbf{g}_1,\mathbf{g}_2)=\mathbf{g}_2-\frac{\mathbf{g}_1^\top\mathbf{g}_2}{|\mathbf{g}1|^2}\mathbf{g}_1$ is the orthogonality operator. It returns a vector orthogonal to $\mathbf{g}_1$ from the plane spanned by $\mathbf{g}_{1}$ and $\mathbf{g}_{2}$. 
 
-This equivlance is implemented as [ConFIG.grad_operator.ConFIG_update_double()](../../api/grad_operator/#ConFIG.grad_operator.ConFIG_update_double). You can also set `allow_simplified_model` to true in [ConFIG.grad_operator.ConFIGOperator](../../api/grad_operator/#ConFIG.grad_operator.ConFIGOperator) to enable using this form in two-loss scenario.
+This equivlance is implemented as [conflictfree.grad_operator.ConFIG_update_double()](../../api/grad_operator/#conflictfree.grad_operator.ConFIG_update_double). You can also set `allow_simplified_model` to true in [conflictfree.grad_operator.ConFIGOperator](../../api/grad_operator/#conflictfree.grad_operator.ConFIGOperator) to enable using this form in two-loss scenario.
 
 ## M-ConFIG
 
@@ -81,7 +81,7 @@ Gradient-based methods like the proposed ConFIG method require separate backprop
 
 ![M-ConFIG](../assets/algorithm.png)
 
-The M-ConFIG method is implemented as [ConFIG.momentum_operator.PseudoMomentumOperator](../../api/momentum_operator/#ConFIG.momentum_operator.PseudoMomentumOperator). This momentum method can also be used for other gradient-based methods. In [ConFIG.momentum_operator.PseudoMomentumOperator](../../api/momentum_operator/#ConFIG.momentum_operator.PseudoMomentumOperator), you can modify the `gradient_operator` parameter to enable momentum acceleration for other methods.
+The M-ConFIG method is implemented as [conflictfree.momentum_operator.PseudoMomentumOperator](../../api/momentum_operator/#conflictfree.momentum_operator.PseudoMomentumOperator). This momentum method can also be used for other gradient-based methods. In [conflictfree.momentum_operator.PseudoMomentumOperator](../../api/momentum_operator/#conflictfree.momentum_operator.PseudoMomentumOperator), you can modify the `gradient_operator` parameter to enable momentum acceleration for other methods.
 
 ---
 
