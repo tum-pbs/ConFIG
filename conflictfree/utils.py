@@ -24,12 +24,15 @@ def get_para_vector(network) -> torch.Tensor:
                 para_vec = torch.cat((para_vec, viewed))
         return para_vec
     
-def get_gradient_vector(network)->torch.Tensor:
+def get_gradient_vector(network,jump_none=True)->torch.Tensor:
     """
     Returns the gradient vector of the given network.
 
     Args:
         network (torch.nn.Module): The network for which to compute the gradient vector.
+        jump_none (bool): Whether to skip the None gradients. default: True
+            This is useful when part of your neural network is frozen or not trainable.
+            You should set the same value to `apply_gradient_vector` when applying the gradient vector.
 
     Returns:
         torch.Tensor: The gradient vector of the network.
@@ -37,6 +40,9 @@ def get_gradient_vector(network)->torch.Tensor:
     with torch.no_grad():
         grad_vec = None
         for par in network.parameters():
+            if par.grad is None:
+                if jump_none:
+                    continue
             viewed=par.grad.data.view(-1)
             if grad_vec is None:
                 grad_vec = viewed
@@ -44,18 +50,24 @@ def get_gradient_vector(network)->torch.Tensor:
                 grad_vec = torch.cat((grad_vec, viewed))
         return grad_vec
 
-def apply_gradient_vector(network:torch.nn.Module,grad_vec:torch.Tensor)->None:
+def apply_gradient_vector(network:torch.nn.Module,grad_vec:torch.Tensor,jump_none=True)->None:
     """
     Applies a gradient vector to the network's parameters.
 
     Args:
         network (torch.nn.Module): The network to apply the gradient vector to.
         grad_vec (torch.Tensor): The gradient vector to apply.
+        jump_none (bool): Whether to skip the None gradients. default: True
+            This is useful when part of your neural network is frozen or not trainable.
+            You should set the same value to `get_gradient_vector` when applying the gradient vector.
 
     """
     with torch.no_grad():
         start=0
         for par in network.parameters():
+            if par.grad is None:
+                if jump_none:
+                    continue
             end=start+par.grad.data.view(-1).shape[0]
             par.grad.data=grad_vec[start:end].view(par.grad.data.shape)
             start=end
