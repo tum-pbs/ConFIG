@@ -5,6 +5,7 @@ The `utils` module contains utility functions for the ConFIG algorithm.
 ::: conflictfree.utils.apply_para_vector
 ::: conflictfree.utils.get_gradient_vector
 ::: conflictfree.utils.apply_gradient_vector
+::: conflictfree.utils.apply_gradient_vector_para_based
 
 ## Math Utility Functions
 ::: conflictfree.utils.get_cos_similarity
