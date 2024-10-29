@@ -3,4 +3,5 @@ black
 mkdocs-material
 mkdocstrings
 mkdocstrings-python
-mknotebooks
+#mknotebooks
+mkdocs-jupyter

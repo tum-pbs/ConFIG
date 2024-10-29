@@ -70,6 +70,7 @@ class LengthModel:
 class ProjectionLength(LengthModel):
     """
     Rescale the length of the target vector based on the projection of the gradients on the target vector:
+    
     $$
     |\mathbf{g}_c|=\sum_{i=1}^m|\mathbf{g}_i|\mathcal{S}_c(\mathbf{g}_i,\mathbf{g}_c)
     $$
@@ -160,6 +161,7 @@ class TrackMinimum(_FlexibleTrackProjectionLength):
     """
     Rescale the length of the target vector based on the projection of the gradients on the target vector.
     All the gradients will be rescaled to the same length as the minimum gradient before projection, i.e., the minimum gradient will be the same length as the target vector.
+    
     $$
     |\mathbf{g}_c|=\sum_{i=1}^m|\mathbf{g}_{min}|\mathcal{S}_c(\mathbf{g}_i,\mathbf{g}_c)
     $$
@@ -176,6 +178,7 @@ class TrackMaximum(_FlexibleTrackProjectionLength):
     """
     Rescale the length of the target vector based on the projection of the gradients on the target vector.
     All the gradients will be rescaled to the same length as the maximum gradient before projection, i.e., the maximum gradient will be the same length as the target vector.
+    
     $$
     |\mathbf{g}_c|=\sum_{i=1}^m|\mathbf{g}_{max}|\mathcal{S}_c(\mathbf{g}_i,\mathbf{g}_c)
     $$
@@ -192,14 +195,18 @@ class TrackHarmonicAverage(_FlexibleTrackProjectionLength):
     """
     Rescale the length of the target vector based on the projection of the gradients on the target vector.
     All the gradients will be rescaled to the harmonic average of the lengths of all gradients before projection, i.e., the minimum gradient will be the same length as the target vector.
+    
     $$
     |\mathbf{g}_c|=\sum_{i=1}^m\overline{|\mathbf{g}|}_{harm}\mathcal{S}_c(\mathbf{g}_i,\mathbf{g}_c)
     $$
+    
     where
+    
     $$
     \overline{|\mathbf{g}|}_{harm}=\frac{m}{\sum_{i=1}^m \frac{1}{|\mathbf{g}_i|}}
     $$
-    The harmonic average is used to avoid the influence of the large gradients.
+    
+    The harmonic average can be used to avoid the influence of the large gradients.
     """
 
     def __init__(self):
@@ -213,10 +220,13 @@ class TrackArithmeticAverage(_FlexibleTrackProjectionLength):
     """
     Rescale the length of the target vector based on the projection of the gradients on the target vector.
     All the gradients will be rescaled to the arithmetic average of the lengths of all gradients before projection, i.e., the minimum gradient will be the same length as the target vector.
+    
     $$
     |\mathbf{g}_c|=\sum_{i=1}^m\overline{|\mathbf{g}|}_{arith}\mathcal{S}_c(\mathbf{g}_i,\mathbf{g}_c)
     $$
+    
     where
+    
     $$
     \overline{|\mathbf{g}|}_{arith}=\frac{1}{m}\sum_{i=1}^m |\mathbf{g}_i|
     $$
@@ -233,14 +243,18 @@ class TrackGeometricAverage(_FlexibleTrackProjectionLength):
     """
     Rescale the length of the target vector based on the projection of the gradients on the target vector.
     All the gradients will be rescaled to the geometric average of the lengths of all gradients before projection, i.e., the minimum gradient will be the same length as the target vector.
+    
     $$
     |\mathbf{g}_c|=\sum_{i=1}^m\overline{|\mathbf{g}|}_{geom}\mathcal{S}_c(\mathbf{g}_i,\mathbf{g}_c)
     $$
+    
     where
+    
     $$
     \overline{|\mathbf{g}|}_{geom}=\left(\prod_{i=1}^m |\mathbf{g}_i|\right)^{\frac{1}{m}}
     $$
-    The geometric average is used to avoid the influence of the large gradients.
+    
+    The geometric average can be used to avoid the influence of the large gradients.
     """
 
     def __init__(self):
@@ -255,6 +269,7 @@ class TrackSpecific(_FlexibleTrackProjectionLength):
     Rescale the length of the target vector based on the projection of the gradients on the target vector.
     All the gradients will be rescaled to the same length as the specific gradient before projection.
     E.g., if the track_id is 2, then all the gradients will be rescaled to the same length as the third gradient before projection.
+    
     $$
     |\mathbf{g}_c|=\sum_{i=1}^m\overline{|\mathbf{g}|}_{track_id}\mathcal{S}_c(\mathbf{g}_i,\mathbf{g}_c)
     $$

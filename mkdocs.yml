@@ -18,6 +18,7 @@ theme:
         - navigation.top
         - navigation.footer
         - navigation.path
+        - announce.dismiss
     palette:
         - scheme: default
           primary: brown
@@ -35,6 +36,7 @@ theme:
         repo: fontawesome/brands/github  # GitHub logo in top right
     logo: assets/config_white.png
     favicon: assets/config_colorful.svg
+    custom_dir: overrides
 
 extra:
   social:
@@ -60,14 +62,16 @@ markdown_extensions:
     - pymdownx.smartsymbols
 
 extra_javascript:
-    - javascripts/mathjax.js
+    - https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML
     - https://polyfill.io/v3/polyfill.min.js?features=es6
-    - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
     - search  # default search plugin; needs manually re-enabling when using any other plugins
     - autorefs  # Cross-links to headings
-    - mknotebooks  # Jupyter notebooks
+    #- mknotebooks  # Jupyter notebooks
+    - mkdocs-jupyter:
+        include_requirejs: true
+        include_source: True
     - mkdocstrings:
         handlers:
             python:
@@ -92,10 +96,11 @@ nav:
     - '2. Examples': 
         - '2.1. Toy Example of Muti-task Learning': 'examples/mtl_toy.ipynb'
         - "2.2. Solve Burgers' Equation with PINN": 'examples/pinn_burgers.ipynb'
-    - '3. API Reference':
-        - "3.1. Gradient Operator": 'api/grad_operator.md'
-        - "3.2. Momentum Operator": 'api/momentum_operator.md'
-        - "3.3. Weight Model": 'api/weight_model.md'
+    - '3. Troubleshooting': 'start/troubleshooting.ipynb'
+    - '4. API Reference':
+        - "4.1. Gradient Operator": 'api/grad_operator.md'
+        - "4.2. Momentum Operator": 'api/momentum_operator.md'
+        - "4.3. Weight Model": 'api/weight_model.md'
         - "4.4. Length Model": 'api/length_model.md'
         - "4.5. Loss Recorder": 'api/loss_recorder.md'
         - "4.6. Utils": 'api/utils.md'
