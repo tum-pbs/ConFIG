@@ -171,7 +171,7 @@ class PseudoMomentumOperator(MomentumOperator):
             loss_i.backward()
             grads.append(get_gradient_vector(network))
         g_config=operator.calculate_gradient(grads) # calculate the conflict-free direction
-        apply_gradient_vector(network) # or simply use `operator.update_gradient(network,grads)` to calculate and set the condlict-free direction to the network
+        apply_gradient_vector(network,g_config) # or simply use `operator.update_gradient(network,grads)` to calculate and set the condlict-free direction to the network
         optimizer.step()
     ```
     """
