@@ -87,7 +87,7 @@ class SchrodingerTrainerBasis():
         else:
             return [self.get_internal_loss,self.get_boundary_loss,self.get_initial_loss]
 
-class BaseLineTrainer(SchrodingerTrainerBasis,BaseLineTrainerBasis):
+class StandardTrainer(SchrodingerTrainerBasis,StandardTrainerBasis):
     pass
 
 def training(epochs,trainer:SchrodingerTrainerBasis,
