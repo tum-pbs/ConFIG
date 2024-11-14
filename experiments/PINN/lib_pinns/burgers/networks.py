@@ -48,7 +48,7 @@ class BurgersNet(nn.Module):
         for i in range(n_layers):
             self.net.append(nn.Sequential(nn.Linear(channel_basics, channel_basics), nn.Tanh()))
         self.net=nn.Sequential(*self.net)
-        self.out_net=nn.Sequential(nn.Linear(channel_basics, 1))
+        self.out_net=nn.Linear(channel_basics, 1)
     
     def forward(self, x, t):
         ini_shape=x.shape

@@ -297,7 +297,6 @@ def get_momentum_trainer(sub_trainer,operator):
     class MomentumTrainer(MomentumGradVecTrainerBasis):
         def initialize_momentum_handler(self,network):
             self.momentum_handler=PseudoMomentumOperator(num_vectors=self.configs.n_losses,
-                                                         network=network,
                                                          gradient_operator=operator,
                                                          loss_recorder=LatestLossRecorder(self.configs.n_losses))
     class Trainer(sub_trainer,MomentumTrainer):
@@ -308,7 +307,6 @@ def get_separate_momentum_trainer(sub_trainer,operator):
     class MomentumTrainer(MomentumGradVecTrainerBasis):
         def initialize_momentum_handler(self,network):
             self.momentum_handler=SeparateMomentumOperator(num_vectors=self.configs.n_losses,
-                                                network=network,
                                                 gradient_operator=operator,
                                                 loss_recorder=LatestLossRecorder(self.configs.n_losses))
     class Trainer(sub_trainer,MomentumTrainer):
