@@ -3,7 +3,7 @@
 </h1>
 
 
-<h4 align="center">Official implementation of Conflict-Free Inverse Gradients Method</h4>
+<h4 align="center">Official implementation of Conflict-Free Inverse Gradients Method [ICLR 2025]</h4>
 <h6 align="center">Towards Conflict-free Training for Everything and Everyone!</h6>
 
 <p align="center">
@@ -57,11 +57,12 @@ Then the dot product between $\boldsymbol{g}_{ConFIG}$ and each loss-specific gr
 ***Cite as:*** 
 
 ```latex
-@article{Liu2024ConFIG,
-author = {Qiang Liu and Mengyu Chu and Nils Thuerey},
-title = {ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks},
-year={2024},
-url={https://arxiv.org/abs/2408.11104},
+@inproceedings{Liu2024ConFIG,
+  author = {Qiang Liu and Mengyu Chu and Nils Thuerey},
+  title = {ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks},
+  booktitle = {The Thirteenth International Conference on Learning Representations},
+  year={2024},
+  url={https://arxiv.org/abs/2408.11104},
 }
 ```
 
