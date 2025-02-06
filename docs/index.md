@@ -6,8 +6,8 @@ hide:
 <p align="center">
   <img src="./assets/config.png" width="400"/>
 </p>
-<h4 align="center">Towards Conflict-free Training for Everything and Everyone!</h4>
-
+<h4 align="center">Official implementation of Conflict-Free Inverse Gradients Method [ICLR2025]</h4>
+<h6 align="center">Towards Conflict-free Training for Everything and Everyone!</h6>
 <p align="center">
   [ <a href="https://arxiv.org/abs/2408.11104">📄 Research Paper</a> ]•[ <a href="https://github.com/tum-pbs/ConFIG"><img src="./assets/github.svg" width="16"> GitHub Repository</a> ]
 </p>
@@ -62,11 +62,12 @@ Then the dot product between $\mathbf{g}_{ConFIG}$ and each loss-specific gradie
 ***Cite as:*** 
 
 ```latex
-@article{Liu2024ConFIG,
-author = {Qiang Liu and Mengyu Chu and Nils Thuerey},
-title = {ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks},
-year={2024},
-url={https://arxiv.org/abs/2408.11104},
+@inproceedings{Liu2024ConFIG,
+  author = {Qiang Liu and Mengyu Chu and Nils Thuerey},
+  title = {ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks},
+  booktitle = {The Thirteenth International Conference on Learning Representations},
+  year={2024},
+  url={https://arxiv.org/abs/2408.11104},
 }
 ```
 
