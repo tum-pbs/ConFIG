@@ -1,10 +1,9 @@
-from torch import Tensor
-from torch.nn.modules import Module
 from conflictfree import Sequence
 from conflictfree.grad_operator import ConFIGOperator, GradientOperator
 from conflictfree.utils import Sequence
 from conflictfree.loss_recorder import LatestLossRecorder, LossRecorder
-from . import *
+import torch
+from typing import Optional, Sequence, Union
 from .utils import *
 from .loss_recorder import *
 from .grad_operator import *

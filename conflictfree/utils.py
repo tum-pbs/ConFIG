@@ -1,8 +1,8 @@
 # usr/bin/python3
 # -*- coding: UTF-8 -*-
-from . import *
+import torch
+from typing import Sequence, Union, Tuple, Literal
 import numpy as np
-from typing import Literal
 
 
 def get_para_vector(network: torch.nn.Module) -> torch.Tensor:

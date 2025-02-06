@@ -1,8 +1,7 @@
 # usr/bin/python3
 # -*- coding: UTF-8 -*-
-from . import *
-
-from typing import Union
+import torch
+from typing import Optional, Sequence, Union
 from .utils import *
 from .weight_model import *
 from .length_model import *

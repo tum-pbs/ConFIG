@@ -1,4 +1,5 @@
-from . import *
+import torch
+from typing import Sequence, Union, Optional
 
 
 class WeightModel:

@@ -1,4 +1,4 @@
-from . import *
+from typing import Sequence, Union, Tuple
 
 
 class LossRecorder:

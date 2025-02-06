@@ -88,6 +88,8 @@ plugins:
                     heading_level: 4
                     show_symbol_type_heading: true
                     docstring_style: google
+                    preload_modules:
+                        - torch
 
 nav:
     - 'Home': 'index.md'
