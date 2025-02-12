@@ -6,7 +6,7 @@ hide:
 <p align="center">
   <img src="./assets/config.png" width="400"/>
 </p>
-<h4 align="center">Official implementation of Conflict-Free Inverse Gradients Method [ICLR2025]</h4>
+<h4 align="center">Official implementation of Conflict-Free Inverse Gradients Method [ICLR2025 Spotlight]</h4>
 <h6 align="center">Towards Conflict-free Training for Everything and Everyone!</h6>
 <p align="center">
   [ <a href="https://arxiv.org/abs/2408.11104">📄 Research Paper</a> ]•[ <a href="https://github.com/tum-pbs/ConFIG"><img src="./assets/github.svg" width="16"> GitHub Repository</a> ]

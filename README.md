@@ -2,7 +2,7 @@
   <img src="./docs/assets/config.png" width="400"/>
 </h1>
 
-<h4 align="center">Official implementation of Conflict-Free Inverse Gradients Method [ICLR2025]</h4>
+<h4 align="center">Official implementation of Conflict-Free Inverse Gradients Method [ICLR2025 Spotlight]</h4>
 <h6 align="center">Towards Conflict-free Training for Everything and Everyone!</h6>
 
 <p align="center">
