@@ -104,7 +104,7 @@ for input_i in dataset:
         loss_i.backward()
         grads.append(get_gradient_vector(network)) #get loss-specfic gradient
     g_config=ConFIG_update(grads) # calculate the conflict-free direction
-    apply_gradient_vector(network,g_config) # set the condlict-free direction to the network
+    apply_gradient_vector(network,g_config) # set the conflict-free direction to the network
     optimizer.step()
 ```
 

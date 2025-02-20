@@ -44,7 +44,7 @@ def ConFIG_update_double(
                 loss_i.backward()
                 grads.append(get_gradient_vector(network)) #get loss-specfic gradient
             g_config=ConFIG_update_double(grads) # calculate the conflict-free direction
-            apply_gradient_vector(network,g_config) # set the condlict-free direction to the network
+            apply_gradient_vector(network,g_config) # set the conflict-free direction to the network
             optimizer.step()
         ```
 
@@ -118,7 +118,7 @@ def ConFIG_update(
                 loss_i.backward()
                 grads.append(get_gradient_vector(network)) #get loss-specfic gradient
             g_config=ConFIG_update(grads) # calculate the conflict-free direction
-            apply_gradient_vector(network,g_config) # set the condlict-free direction to the network
+            apply_gradient_vector(network,g_config) # set the conflict-free direction to the network
             optimizer.step()
         ```
     """
@@ -230,7 +230,7 @@ class ConFIGOperator(GradientOperator):
                 loss_i.backward()
                 grads.append(get_gradient_vector(network))
             g_config=operator.calculate_gradient(grads) # calculate the conflict-free direction
-            apply_gradient_vector(network,g_config) # or simply use `operator.update_gradient(network,grads)` to calculate and set the condlict-free direction to the network
+            apply_gradient_vector(network,g_config) # or simply use `operator.update_gradient(network,grads)` to calculate and set the conflict-free direction to the network
             optimizer.step()
         ```
 
