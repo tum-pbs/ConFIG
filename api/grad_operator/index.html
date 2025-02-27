@@ -1102,7 +1102,7 @@ you can set this value as None. Defaults to None.</p>
         <span class="n">loss_i</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
         <span class="n">grads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_gradient_vector</span><span class="p">(</span><span class="n">network</span><span class="p">))</span> <span class="c1">#get loss-specfic gradient</span>
     <span class="n">g_config</span><span class="o">=</span><span class="n">ConFIG_update</span><span class="p">(</span><span class="n">grads</span><span class="p">)</span> <span class="c1"># calculate the conflict-free direction</span>
-    <span class="n">apply_gradient_vector</span><span class="p">(</span><span class="n">network</span><span class="p">,</span><span class="n">g_config</span><span class="p">)</span> <span class="c1"># set the condlict-free direction to the network</span>
+    <span class="n">apply_gradient_vector</span><span class="p">(</span><span class="n">network</span><span class="p">,</span><span class="n">g_config</span><span class="p">)</span> <span class="c1"># set the conflict-free direction to the network</span>
     <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 
@@ -1207,7 +1207,7 @@ you can set this value as None. Defaults to None.</p>
 <span class="sd">                loss_i.backward()</span>
 <span class="sd">                grads.append(get_gradient_vector(network)) #get loss-specfic gradient</span>
 <span class="sd">            g_config=ConFIG_update(grads) # calculate the conflict-free direction</span>
-<span class="sd">            apply_gradient_vector(network,g_config) # set the condlict-free direction to the network</span>
+<span class="sd">            apply_gradient_vector(network,g_config) # set the conflict-free direction to the network</span>
 <span class="sd">            optimizer.step()</span>
 <span class="sd">        ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1389,7 +1389,7 @@ you can set this value as None. Defaults to None.</p>
         <span class="n">loss_i</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
         <span class="n">grads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_gradient_vector</span><span class="p">(</span><span class="n">network</span><span class="p">))</span> <span class="c1">#get loss-specfic gradient</span>
     <span class="n">g_config</span><span class="o">=</span><span class="n">ConFIG_update_double</span><span class="p">(</span><span class="n">grads</span><span class="p">)</span> <span class="c1"># calculate the conflict-free direction</span>
-    <span class="n">apply_gradient_vector</span><span class="p">(</span><span class="n">network</span><span class="p">,</span><span class="n">g_config</span><span class="p">)</span> <span class="c1"># set the condlict-free direction to the network</span>
+    <span class="n">apply_gradient_vector</span><span class="p">(</span><span class="n">network</span><span class="p">,</span><span class="n">g_config</span><span class="p">)</span> <span class="c1"># set the conflict-free direction to the network</span>
     <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 
@@ -1500,7 +1500,7 @@ you can set this value as None. Defaults to None.</p>
 <span class="sd">                loss_i.backward()</span>
 <span class="sd">                grads.append(get_gradient_vector(network)) #get loss-specfic gradient</span>
 <span class="sd">            g_config=ConFIG_update_double(grads) # calculate the conflict-free direction</span>
-<span class="sd">            apply_gradient_vector(network,g_config) # set the condlict-free direction to the network</span>
+<span class="sd">            apply_gradient_vector(network,g_config) # set the conflict-free direction to the network</span>
 <span class="sd">            optimizer.step()</span>
 <span class="sd">        ```</span>
 
@@ -1655,7 +1655,7 @@ Recommended to set to True. Defaults to True.</p>
         <span class="n">loss_i</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
         <span class="n">grads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_gradient_vector</span><span class="p">(</span><span class="n">network</span><span class="p">))</span>
     <span class="n">g_config</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">calculate_gradient</span><span class="p">(</span><span class="n">grads</span><span class="p">)</span> <span class="c1"># calculate the conflict-free direction</span>
-    <span class="n">apply_gradient_vector</span><span class="p">(</span><span class="n">network</span><span class="p">,</span><span class="n">g_config</span><span class="p">)</span> <span class="c1"># or simply use `operator.update_gradient(network,grads)` to calculate and set the condlict-free direction to the network</span>
+    <span class="n">apply_gradient_vector</span><span class="p">(</span><span class="n">network</span><span class="p">,</span><span class="n">g_config</span><span class="p">)</span> <span class="c1"># or simply use `operator.update_gradient(network,grads)` to calculate and set the conflict-free direction to the network</span>
     <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 
@@ -1778,7 +1778,7 @@ Recommended to set to True. Defaults to True.</p>
 <span class="sd">                loss_i.backward()</span>
 <span class="sd">                grads.append(get_gradient_vector(network))</span>
 <span class="sd">            g_config=operator.calculate_gradient(grads) # calculate the conflict-free direction</span>
-<span class="sd">            apply_gradient_vector(network,g_config) # or simply use `operator.update_gradient(network,grads)` to calculate and set the condlict-free direction to the network</span>
+<span class="sd">            apply_gradient_vector(network,g_config) # or simply use `operator.update_gradient(network,grads)` to calculate and set the conflict-free direction to the network</span>
 <span class="sd">            optimizer.step()</span>
 <span class="sd">        ```</span>
 
