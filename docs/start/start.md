@@ -70,16 +70,16 @@ from conflictfree.momentum_operator import PseudoMomentumOperator
 from conflictfree.utils import get_gradient_vector,apply_gradient_vector
 optimizer=torch.Adam(network.parameters(),lr=1e-3)
 operator=PseudoMomentumOperator(num_vector=len(loss_fns)) # initialize operator, the only difference here is we need to specify the number of gradient vectors.
+global_step=0
 for input_i in dataset:
-    grads=[]
-    for loss_fn in loss_fns:
-    	optimizer.zero_grad()
-    	loss_i=loss_fn(input_i)
-        loss_i.backward()
-        grads.append(get_gradient_vector(network))
-    g_config=operator.calculate_gradient(grads) # calculate the conflict-free direction
+    optimizer.zero_grad()
+    index=global_step % len(loss_fns)
+    loss=loss_fns[index](input_i)
+    loss.backward()
+    g_config=operator.calculate_gradient(index,get_gradient_vector(network)) # calculate the conflict-free direction
     apply_gradient_vector(network,g_config) # or simply use `operator.update_gradient(network,grads)` to calculate and set the conflict-free direction to the network
     optimizer.step()
+    global_step+=1
 ```
 
 You can also specify an instance of `PCGradOperator` or `IMTLGOperator` to the `gradient_operator` parameter of `PseudoMomentumOperator` to build momentum-based version of these two methods.
