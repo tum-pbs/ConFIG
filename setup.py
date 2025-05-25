@@ -15,7 +15,7 @@ def get_install_requires():
 
 setuptools.setup(
     name="conflictfree",
-    version="0.1.7",
+    version="0.1.8",
     author="Qiang Liu, Mengyu Chu, Nils Thuerey",
     author_email="qiangliu.7@outlook.com",
     description="Official implementation of Conflict-free Inverse Gradients method",

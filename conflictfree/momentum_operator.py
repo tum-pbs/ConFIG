@@ -1,6 +1,4 @@
-from conflictfree import Sequence
 from conflictfree.grad_operator import ConFIGOperator, GradientOperator
-from conflictfree.utils import Sequence
 from conflictfree.loss_recorder import LatestLossRecorder, LossRecorder
 import torch
 from typing import Optional, Sequence, Union
