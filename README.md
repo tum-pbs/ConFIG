@@ -9,6 +9,13 @@
   [<a href="https://arxiv.org/abs/2408.11104">📄 Research Paper</a>]•[<a href="https://tum-pbs.github.io/ConFIG/">📖 Documentation & Examples</a>]
 </p>
 
+## News
+Recently, the ConFIG method has also been applied to train physics-constrained generative models:
+
+* Flow Matching Meets PDEs: A Unified Framework for Physics-Constrained Generation, Giacomo Baldan, Qiang Liu, Alberto Guardone, Nils Thuerey, https://arxiv.org/abs/2506.08604
+
+* Guiding diffusion models to reconstruct flow fields from sparse data, Marc Amorós-Trepat, Luis Medrano-Navarro, Qiang Liu, Luca Guastoni, Nils Thuerey, https://arxiv.org/abs/2506.11908
+
 ## About
 
 * **What is the ConFIG method?**
