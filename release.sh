@@ -1,2 +1,2 @@
-python setup.py bdist_wheel --universal
+python3 -m build --wheel --sdist
 twine upload dist/*
