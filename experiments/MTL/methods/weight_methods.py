@@ -13,7 +13,7 @@ from methods.min_norm_solvers import MinNormSolver, gradient_normalizers
 
 from conflictfree.grad_operator import *
 from conflictfree.momentum_operator import *
-from conflictfree.helpers import OrderedSliceSelector
+from conflictfree.utils import OrderedSliceSelector
 
 EPS = 1e-8 # for numerical stability
 
