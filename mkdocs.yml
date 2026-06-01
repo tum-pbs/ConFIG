@@ -63,7 +63,7 @@ markdown_extensions:
 
 extra_javascript:
     - https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML
-    - https://polyfill.io/v3/polyfill.min.js?features=es6
+    #- https://polyfill.io/v3/polyfill.min.js?features=es6
 
 plugins:
     - search  # default search plugin; needs manually re-enabling when using any other plugins
